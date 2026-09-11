@@ -1,41 +1,28 @@
-# banking-management-system
-
-Core - Sistema de Gestão Bancária
-
+Core - Banking Management System
 Description
 
-O Core é um sistema de gestão bancária desenvolvido em Java, destinado à gestão de clientes e contas bancárias.
+Core is a banking management system developed in Java, designed to manage customers and bank accounts.
 
-Nas operações que envolvam pagamentos a entidades externas, o Core será responsável pela gestão, validação e autorização da operação, sendo o processamento do pagamento realizado por um sistema externo através de comunicação HTTP.
+For operations involving payments to external entities, Core will be responsible for managing, validating, and authorizing the operation. The actual payment processing will be performed by an external system through HTTP communication.
 
+Main Entities (Database)
 
-Main Entities (Data Base)
+Customer: Represents customers registered in the system. Contains information such as name, tax identification number (NIF), email, phone number, and customer status.
 
-- Cliente: representa os clientes registados no sistema. Contém informações como nome, NIF, email, telefone e estado do cliente.
+Account: Represents bank accounts belonging to customers. Each account contains information such as IBAN, account type, balance, status, and account holder.
 
-- Conta: representa as contas bancárias pertencentes aos clientes. Cada conta terá informações como IBAN, tipo de conta, saldo, estado e respetivo titular.
+Transaction: Represents operations performed on a bank account, such as deposits, withdrawals, transfers, payments, or other transactions.
 
-- Movimento: representa as operações realizadas numa conta bancária, como depósitos, levantamentos, transferências, pagamentos ou outras movimentações.
-
-- Transferência: representa uma transferência de dinheiro entre duas contas, identificando a conta de origem, conta de destino, valor, data e estado da operação.
-
+Transfer: Represents a money transfer between two accounts, identifying the source account, destination account, amount, date, and operation status.
 
 Main Business Rules
 
-- Validar os dados dos clientes e das contas antes da realização das operações.
-
-- Garantir que apenas contas ativas podem realizar operações bancárias.
-
-- Validar a existência de saldo suficiente antes de operações de débito.
-
-- Atualizar corretamente o saldo da conta após cada operação.
-
-- Registar os movimentos associados às operações realizadas.
-
-- Validar as contas envolvidas antes da realização de transferências.
-
-- Aplicar limites e restrições definidos para cada tipo de operação.
-
-- Garantir a consistência dos dados caso uma operação não seja concluída com sucesso.
-
-- Nos pagamentos externos, validar e autorizar a operação antes do seu envio, através de HTTP, para processamento por um sistema externo.
+Validate customer and account data before performing operations.
+Ensure that only active accounts can perform banking operations.
+Verify that sufficient funds are available before debit operations.
+Correctly update the account balance after each operation.
+Record transactions associated with the operations performed.
+Validate the accounts involved before performing transfers.
+Apply the limits and restrictions defined for each type of operation.
+Ensure data consistency if an operation is not completed successfully.
+For external payments, validate and authorize the operation before sending it via HTTP to an external system for processing.
