@@ -5,27 +5,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseInit {
-    public static void criarTabelas(){
-        String sqlClientes = """
-            CREATE TABLE IF NOT EXISTS clientes (
+    public static void createTable(){
+        String sqlClients = """
+            CREATE TABLE IF NOT EXISTS clients (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nome TEXT NOT NULL,
+                name TEXT NOT NULL,
                 nif TEXT NOT NULL UNIQUE,
                 email TEXT,
-                telefone TEXT
+                phoneNumber TEXT,
+                Status TEXT
             )
         """;
         
         try (
-            Connection conn = DatabaseConfig.conectar();
+            Connection conn = DatabaseConfig.connect();
             Statement stmt = conn.createStatement()
         ){
-            stmt.execute(sqlClientes);
-            System.out.print("Tabela criada com sucesso!");
+            stmt.execute(sqlClients);
+            System.out.print("Table created successfully!");
         }
         
         catch (SQLException e) {
-            System.out.print("Erro ao criar tabela de clientes: " + e.getMessage());
+            System.out.print("Error creating table:  " + e.getMessage());
         }
     }
+
+
+    // public static void main(String[] args) {
+    //     createTable();
+    // }
 }

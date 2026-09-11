@@ -9,7 +9,7 @@ public class DatabaseConfig {
 
     private static final String URL = "jdbc:sqlite:corebank.db";
 
-    public static Connection conectar() throws SQLException {
+    public static Connection connect() throws SQLException {
         return DriverManager.getConnection(URL);
     }
 
