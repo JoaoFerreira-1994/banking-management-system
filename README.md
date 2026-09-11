@@ -8,8 +8,11 @@ For operations involving payments to external entities, Core will be responsible
 Main Entities (Database)
 
 Customer: Represents customers registered in the system. Contains information such as name, tax identification number (NIF), email, phone number, and customer status.
+
 Account: Represents bank accounts belonging to customers. Each account contains information such as IBAN, account type, balance, status, and account holder.
+
 Transaction: Represents operations performed on a bank account, such as deposits, withdrawals, transfers, payments, or other transactions.
+
 Transfer: Represents a money transfer between two accounts, identifying the source account, destination account, amount, date, and operation status.
 
 Main Business Rules
