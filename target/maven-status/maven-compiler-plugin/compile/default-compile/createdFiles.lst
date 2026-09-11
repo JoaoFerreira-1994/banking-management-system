@@ -1,1 +1,5 @@
+com\corebank\repository\ClienteRepository.class
+com\corebank\config\DatabaseInit.class
 com\corebank\config\ApplicationConfig.class
+com\corebank\config\DatabaseConfig.class
+com\corebank\model\Cliente.class
