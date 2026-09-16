@@ -18,7 +18,7 @@ public class Client {
         this.status=status;
     }
 
-    // -------------------- GET ---------------------
+    // -------------------- GETTERS ---------------------
     public int getId(){return id;}
     public String getName(){return name;}
     public String getNif(){return nif;}
@@ -26,7 +26,7 @@ public class Client {
     public String getPhoneNumber(){return phoneNumber;}
     public String getStatus(){return status;}
 
-    // -------------------- SET ---------------------
+    // -------------------- SETTERS ---------------------
     public void setId(int id){this.id=id;}
     public void setName(String name){this.name=name;}
     public void setNif(String nif){this.nif=nif;}
