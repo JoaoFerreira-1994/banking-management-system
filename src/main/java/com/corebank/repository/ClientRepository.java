@@ -34,6 +34,16 @@ public class ClientRepository {
 
             stmt.executeUpdate();
 
+            try (
+                PreparedStatement idStmt = conn.prepareStatement("SELECT last_insert_rowid()");
+                ResultSet rs = idStmt.executeQuery()
+            ) {
+                if (rs.next()) {
+                    client.setId(rs.getInt(1));
+                    System.out.println("Client created successfully!");
+                }
+}
+
             System.out.print("Client created successfully!");
         }
         
