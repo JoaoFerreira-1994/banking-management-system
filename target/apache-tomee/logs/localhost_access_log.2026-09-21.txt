@@ -1,0 +1,8 @@
+127.0.0.1 - - [21/Sep/2026:15:05:28 +0100] "GET /core/api/transactions/account HTTP/1.1" 404 -
+127.0.0.1 - - [21/Sep/2026:15:05:47 +0100] "POST /core/api/transactions/withdrawal/1?amount=500 HTTP/1.1" 400 46
+127.0.0.1 - - [21/Sep/2026:15:06:27 +0100] "GET /core/api/transactions/account/1 HTTP/1.1" 200 12
+127.0.0.1 - - [21/Sep/2026:15:06:40 +0100] "GET /core/api/transactions/account/2 HTTP/1.1" 200 203
+127.0.0.1 - - [21/Sep/2026:15:07:56 +0100] "POST /core/api/transactions/withdrawal/1?amount=200 HTTP/1.1" 400 46
+127.0.0.1 - - [21/Sep/2026:15:08:04 +0100] "POST /core/api/transactions/withdrawal/2?amount=200 HTTP/1.1" 200 48
+127.0.0.1 - - [21/Sep/2026:15:08:22 +0100] "GET /core/api/transactions/accounts/2 HTTP/1.1" 404 -
+127.0.0.1 - - [21/Sep/2026:15:08:35 +0100] "GET /core/api/accounts/2 HTTP/1.1" 200 126
