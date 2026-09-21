@@ -1,7 +1,15 @@
-com\corebank\controller\ClientController.class
 com\corebank\service\ClientService.class
+com\corebank\model\Transaction.class
+com\corebank\controller\AccountController.class
+com\corebank\model\Client.class
+com\corebank\controller\ClientController.class
+com\corebank\model\Account.class
 com\corebank\config\DatabaseInit.class
+com\corebank\controller\TransactionController.class
+com\corebank\repository\TransactionRepository.class
 com\corebank\config\DatabaseConfig.class
 com\corebank\repository\ClientRepository.class
-com\corebank\model\Client.class
+com\corebank\service\AccountService.class
+com\corebank\repository\AccountRepository.class
 com\corebank\config\ApplicationConfig.class
+com\corebank\service\TransactionService.class

@@ -1,3 +1,0 @@
-127.0.0.1 - - [21/Sep/2026:11:13:36 +0100] "GET /core/api/clients/8 HTTP/1.1" 200 136
-127.0.0.1 - - [21/Sep/2026:11:13:46 +0100] "GET /core/api/clients HTTP/1.1" 200 733
-127.0.0.1 - - [21/Sep/2026:11:13:54 +0100] "DELETE /core/api/clients/8 HTTP/1.1" 200 42

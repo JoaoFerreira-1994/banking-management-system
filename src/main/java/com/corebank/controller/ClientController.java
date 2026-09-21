@@ -38,12 +38,20 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createClient(Client client) {
 
-        clientService.createClient(client);
+        boolean created = clientService.createClient(client);
+
+        if (!created) {
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Invalid client data.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
 
         return Response
-                .status(Response.Status.CREATED)
-                .entity(client)
-                .build();
+            .status(Response.Status.CREATED)
+            .entity(client)
+            .build();
     }
 
     // ------------------------- FIND CLIENT BY ID -------------------------

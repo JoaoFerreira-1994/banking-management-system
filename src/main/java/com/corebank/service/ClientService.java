@@ -66,11 +66,16 @@ public class ClientService {
 
     // ------------------------------- Create ---------------------------------
 
-    public void createClient(Client client) {
+    public boolean createClient(Client client) {
 
-        if (!validateClient(client)) {return;}
-        clientRepository.createClient(client);
+    if (!validateClient(client)) {
+        return false;
     }
+
+    clientRepository.createClient(client);
+
+    return true;
+}
 
     // ------------------------------- List ---------------------------------
 
