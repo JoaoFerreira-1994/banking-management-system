@@ -5,13 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.corebank.config.DatabaseConfig;
 import com.corebank.model.Transfer;
 
+
 public class TransferRepository {
+    
+    private static final DateTimeFormatter DATE_FORMATTER =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     // ------------------------------ CREATE ------------------------------
 
@@ -31,7 +36,12 @@ public class TransferRepository {
             stmt.setInt(1, transfer.getSourceAccountId());
             stmt.setInt(2, transfer.getDestinationAccountId());
             stmt.setDouble(3, transfer.getAmount());
-            stmt.setString(4, transfer.getDate().toString());
+
+            stmt.setString(
+                4,
+                transfer.getDate().format(DATE_FORMATTER)
+            );
+
             stmt.setString(5, transfer.getStatus());
 
             stmt.executeUpdate();
@@ -62,33 +72,38 @@ public class TransferRepository {
         Connection conn,
         Transfer transfer) throws SQLException {
 
-    String sql = """
-        INSERT INTO transfers
-        (sourceAccountId, destinationAccountId, amount, date, status)
-        VALUES (?, ?, ?, ?, ?)
-        """;
+        String sql = """
+            INSERT INTO transfers
+            (sourceAccountId, destinationAccountId, amount, date, status)
+            VALUES (?, ?, ?, ?, ?)
+            """;
 
-    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setInt(1, transfer.getSourceAccountId());
-        stmt.setInt(2, transfer.getDestinationAccountId());
-        stmt.setDouble(3, transfer.getAmount());
-        stmt.setString(4, transfer.getDate().toString());
-        stmt.setString(5, transfer.getStatus());
+            stmt.setInt(1, transfer.getSourceAccountId());
+            stmt.setInt(2, transfer.getDestinationAccountId());
+            stmt.setDouble(3, transfer.getAmount());
 
-        stmt.executeUpdate();
-    }
+            stmt.setString(
+                4,
+                transfer.getDate().format(DATE_FORMATTER)
+            );
 
-    try (
-        PreparedStatement idStmt =
-            conn.prepareStatement("SELECT last_insert_rowid()");
-        ResultSet rs = idStmt.executeQuery()
-    ) {
+            stmt.setString(5, transfer.getStatus());
 
-        if (rs.next()) {
-            transfer.setId(rs.getInt(1));
+            stmt.executeUpdate();
         }
-    }
+
+        try (
+            PreparedStatement idStmt =
+                conn.prepareStatement("SELECT last_insert_rowid()");
+            ResultSet rs = idStmt.executeQuery()
+        ) {
+
+            if (rs.next()) {
+                transfer.setId(rs.getInt(1));
+            }
+        }
 }
 
     // ------------------------------ LIST ------------------------------
@@ -112,7 +127,12 @@ public class TransferRepository {
                     rs.getInt("sourceAccountId"),
                     rs.getInt("destinationAccountId"),
                     rs.getDouble("amount"),
-                    LocalDateTime.parse(rs.getString("date")),
+
+                    LocalDateTime.parse(
+                        rs.getString("date"),
+                        DATE_FORMATTER
+                    ),
+
                     rs.getString("status")
                 );
 
@@ -150,7 +170,12 @@ public class TransferRepository {
                         rs.getInt("sourceAccountId"),
                         rs.getInt("destinationAccountId"),
                         rs.getDouble("amount"),
-                        LocalDateTime.parse(rs.getString("date")),
+
+                        LocalDateTime.parse(
+                            rs.getString("date"),
+                            DATE_FORMATTER
+                        ),
+
                         rs.getString("status")
                     );
                 }

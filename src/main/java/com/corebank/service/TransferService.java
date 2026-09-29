@@ -1,16 +1,17 @@
 package com.corebank.service;
 
-import com.corebank.config.DatabaseConfig;
-import com.corebank.model.Account;
-import com.corebank.model.Transfer;
-import com.corebank.model.Transaction;
-import com.corebank.repository.AccountRepository;
-import com.corebank.repository.TransferRepository;
-import com.corebank.repository.TransactionRepository;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.corebank.config.DatabaseConfig;
+import com.corebank.model.Account;
+import com.corebank.model.Transaction;
+import com.corebank.model.Transfer;
+import com.corebank.repository.AccountRepository;
+import com.corebank.repository.TransactionRepository;
+import com.corebank.repository.TransferRepository;
 
 public class TransferService {
 
@@ -100,6 +101,7 @@ public class TransferService {
             double destinationNewBalance =
                 destinationAccount.getBalance() + amount;
 
+            LocalDateTime transferDate = LocalDateTime.now();
 
             // Update source account
             boolean sourceUpdated =
@@ -137,7 +139,7 @@ public class TransferService {
             transfer.setSourceAccountId(sourceAccountId);
             transfer.setDestinationAccountId(destinationAccountId);
             transfer.setAmount(amount);
-            transfer.setDate(LocalDateTime.now());
+            transfer.setDate(transferDate);
             transfer.setStatus("COMPLETED");
 
             transferRepository.createTransfer(conn, transfer);
@@ -146,9 +148,9 @@ public class TransferService {
             // Transaction for source account
             Transaction sourceTransaction = new Transaction();
 
-            sourceTransaction.setType("TRANSFER");
-            sourceTransaction.setAmount(-amount);
-            sourceTransaction.setDate(LocalDateTime.now());
+            sourceTransaction.setType("TRANSFER_OUT");
+            sourceTransaction.setAmount(amount);
+            sourceTransaction.setDate(transferDate);
             sourceTransaction.setAccountId(sourceAccountId);
 
             transactionRepository.createTransaction(
@@ -160,9 +162,9 @@ public class TransferService {
             // Transaction for destination account
             Transaction destinationTransaction = new Transaction();
 
-            destinationTransaction.setType("TRANSFER");
+            destinationTransaction.setType("TRANSFER_IN");
             destinationTransaction.setAmount(amount);
-            destinationTransaction.setDate(LocalDateTime.now());
+            destinationTransaction.setDate(transferDate);
             destinationTransaction.setAccountId(destinationAccountId);
 
             transactionRepository.createTransaction(
@@ -217,5 +219,24 @@ public class TransferService {
                 }
             }
         }
+    }
+
+    // ------------------------------ LIST ------------------------------
+
+    public List<Transfer> listTransfers() {
+        return transferRepository.listTransfers();
+    }
+
+
+    // ------------------------------ FIND BY ID ------------------------------
+
+    public Transfer findTransferID(int id) {
+
+        if (id <= 0) {
+            System.out.println("Invalid transfer ID.");
+            return null;
+        }
+
+        return transferRepository.findTransferID(id);
     }
 }

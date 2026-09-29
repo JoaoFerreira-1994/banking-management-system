@@ -237,21 +237,21 @@ public class AccountRepository {
         int accountId,
         double newBalance) throws SQLException {
 
-    String sql = """
-        UPDATE accounts
-        SET balance = ?
-        WHERE id = ?
-        """;
+        String sql = """
+            UPDATE accounts
+            SET balance = ?
+            WHERE id = ?
+            """;
 
-    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setDouble(1, newBalance);
-        stmt.setInt(2, accountId);
+            stmt.setDouble(1, newBalance);
+            stmt.setInt(2, accountId);
 
-        int rows = stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
 
-        return rows > 0;
-    }
+            return rows > 0;
+        }
 }
 
 

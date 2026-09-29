@@ -1,9 +1,14 @@
 package com.corebank.controller;
 
+import java.util.List;
+
+import com.corebank.model.Transfer;
 import com.corebank.service.TransferService;
 
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -78,5 +83,32 @@ public class TransferController {
             .ok("{\"message\":\"Transfer completed successfully.\"}")
             .type(MediaType.APPLICATION_JSON)
             .build();
+    }
+
+    // ------------------------------ LIST ------------------------------
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Transfer> listTransfers() {
+        return transferService.listTransfers();
+    }
+
+
+    // ------------------------------ FIND BY ID ------------------------------
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findTransferById(@PathParam("id") int id) {
+
+        Transfer transfer = transferService.findTransferID(id);
+
+        if (transfer == null) {
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("{\"error\":\"Transfer not found.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        return Response.ok(transfer).build();
     }
 }

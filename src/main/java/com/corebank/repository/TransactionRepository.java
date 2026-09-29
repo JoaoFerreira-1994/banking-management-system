@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,19 @@ import com.corebank.config.DatabaseConfig;
 import com.corebank.model.Transaction;
 
 public class TransactionRepository {
+
+    private static final DateTimeFormatter DATE_FORMATTER =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
+    private LocalDateTime parseDate(String date) {
+
+    try {
+        return LocalDateTime.parse(date, DATE_FORMATTER);
+    } catch (Exception e) {
+        return LocalDateTime.parse(date);
+    }
+}
 
 // ------------------------------ CREATE ------------------------------
 
@@ -30,7 +44,13 @@ public class TransactionRepository {
 
             stmt.setString(1, transaction.getType());
             stmt.setDouble(2, transaction.getAmount());
-            stmt.setString(3, transaction.getDate().toString());
+            
+            stmt.setString(
+                3,
+                transaction.getDate().format(DATE_FORMATTER)
+            );
+
+
             stmt.setInt(4, transaction.getAccountId());
 
             stmt.executeUpdate();
@@ -72,7 +92,12 @@ public class TransactionRepository {
 
             stmt.setString(1, transaction.getType());
             stmt.setDouble(2, transaction.getAmount());
-            stmt.setString(3, transaction.getDate().toString());
+            
+            stmt.setString(
+                3,
+                transaction.getDate().format(DATE_FORMATTER)
+            );
+
             stmt.setInt(4, transaction.getAccountId());
 
             stmt.executeUpdate();
@@ -110,7 +135,9 @@ public class TransactionRepository {
                     rs.getInt("id"),
                     rs.getString("type"),
                     rs.getDouble("amount"),
-                    LocalDateTime.parse(rs.getString("date")),
+
+                    parseDate(rs.getString("date")),
+
                     rs.getInt("accountId")
                 );
 
@@ -146,7 +173,9 @@ public class TransactionRepository {
                         rs.getInt("id"),
                         rs.getString("type"),
                         rs.getDouble("amount"),
-                        LocalDateTime.parse(rs.getString("date")),
+
+                        parseDate(rs.getString("date")),
+
                         rs.getInt("accountId")
                     );
                 }
@@ -188,7 +217,9 @@ public class TransactionRepository {
                         rs.getInt("id"),
                         rs.getString("type"),
                         rs.getDouble("amount"),
-                        LocalDateTime.parse(rs.getString("date")),
+
+                        parseDate(rs.getString("date")),
+
                         rs.getInt("accountId")
                     );
 

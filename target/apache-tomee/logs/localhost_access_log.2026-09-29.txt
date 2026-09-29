@@ -1,0 +1,2 @@
+127.0.0.1 - - [29/Sep/2026:13:18:23 +0100] "GET /core/api/transfers HTTP/1.1" 200 130
+127.0.0.1 - - [29/Sep/2026:13:18:33 +0100] "GET /core/api/transfers/1 HTTP/1.1" 200 128
