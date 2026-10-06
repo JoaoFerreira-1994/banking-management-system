@@ -3,11 +3,14 @@ package com.corebank.controller;
 import java.util.List;
 
 import com.corebank.model.Account;
+import com.corebank.model.User;
 import com.corebank.service.AccountService;
+import com.corebank.util.AuthUtil;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -27,20 +30,54 @@ public class AccountController {
 
 
     // ------------------------------ LIST ------------------------------
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Account> listAccounts() {
-        return accountService.listAccounts();
+    public Response listAccounts(
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isEmployee(user)) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        List<Account> accounts = accountService.listAccounts();
+
+        return Response
+            .ok(accounts)
+            .build();
     }
 
 
     // ------------------------------ FIND BY ID ------------------------------
-
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAccountById(@PathParam("id") int id) {
+    public Response findAccountById(
+            @PathParam("id") int id,
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
 
         Account account = accountService.findAccountID(id);
 
@@ -52,15 +89,61 @@ public class AccountController {
                 .build();
         }
 
-        return Response.ok(account).build();
+        // CLIENT can only access their own account
+        if (AuthUtil.isClient(user)) {
+
+            if (user.getClientId() == null ||
+                user.getClientId() != account.getClientId()) {
+
+                return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("{\"error\":\"Access denied.\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+            }
+        }
+
+        // Only CLIENT or EMPLOYEE can access
+        else if (!AuthUtil.isEmployee(user)) {
+
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        return Response
+            .ok(account)
+            .build();
     }
 
-    // ------------------------------ CREATE ------------------------------
 
+    // ------------------------------ CREATE ------------------------------
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(Account account) {
+    public Response createAccount(
+            Account account,
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isEmployee(user)) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
 
         boolean created = accountService.createAccount(account);
 
@@ -78,15 +161,34 @@ public class AccountController {
             .build();
     }
 
-    // ------------------------------ UPDATE ------------------------------
 
+    // ------------------------------ UPDATE ------------------------------
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateAccount(
             @PathParam("id") int id,
-            Account account) {
+            Account account,
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isEmployee(user)) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
 
         Account existingAccount = accountService.findAccountID(id);
 
@@ -104,15 +206,37 @@ public class AccountController {
 
         Account updatedAccount = accountService.findAccountID(id);
 
-        return Response.ok(updatedAccount).build();
+        return Response
+            .ok(updatedAccount)
+            .build();
     }
 
-    // ------------------------------ DELETE ------------------------------
 
+    // ------------------------------ DELETE ------------------------------
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteAccount(@PathParam("id") int id) {
+    public Response deleteAccount(
+            @PathParam("id") int id,
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isEmployee(user)) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
 
         Account existingAccount = accountService.findAccountID(id);
 
@@ -131,10 +255,4 @@ public class AccountController {
             .type(MediaType.APPLICATION_JSON)
             .build();
     }
-
-
-
-  
-
-
 }

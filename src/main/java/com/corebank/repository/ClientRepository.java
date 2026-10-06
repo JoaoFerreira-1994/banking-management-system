@@ -15,40 +15,50 @@ import com.corebank.model.Client;
 public class ClientRepository {
 
 // ---------------------------------- CREATE -----------------------------------------
+    public static boolean createClient(Client client) {
 
-    public static void createClient(Client client){
         String sql = """
             INSERT INTO clients (name, nif, email, phoneNumber, status)
-            values(?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?)
         """;
-    
+
         try (
             Connection conn = DatabaseConfig.connect();
             PreparedStatement stmt = conn.prepareStatement(sql)
-        ){
+        ) {
+
             stmt.setString(1, client.getName());
             stmt.setString(2, client.getNif());
             stmt.setString(3, client.getEmail());
             stmt.setString(4, client.getPhoneNumber());
             stmt.setString(5, client.getStatus());
 
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected == 0) {
+                return false;
+            }
 
             try (
-                PreparedStatement idStmt = conn.prepareStatement("SELECT last_insert_rowid()");
+                PreparedStatement idStmt =
+                    conn.prepareStatement("SELECT last_insert_rowid()");
                 ResultSet rs = idStmt.executeQuery()
             ) {
                 if (rs.next()) {
                     client.setId(rs.getInt(1));
-                    System.out.println("Client created successfully!");
                 }
-}
+            }
 
-            System.out.print("Client created successfully!");
-        }
-        
-        catch (SQLException e) {
-            System.out.print("Error creating client: " + e.getMessage());
+            System.out.println("Client created successfully!");
+            return true;
+
+        } catch (SQLException e) {
+
+            System.out.println(
+                "Error creating client: " + e.getMessage()
+            );
+
+            return false;
         }
     }
 
@@ -266,28 +276,5 @@ public class ClientRepository {
         catch (SQLException e) {System.out.println("Error deleting client: " + e.getMessage());}
 
     }
-
-    // ---------------------------------- CÓDIGO DE TESTE -----------------------------------------
-
-    // public static void main(String[] args) {
-
-    //     ClientRepository repository = new ClientRepository();
-
-    //     repository.deleteClient(2);
-
-    //     Client client = repository.findClientID(2);
-
-    //     if (client == null) {
-    //         System.out.println("Confirmed: client no longer exists.");
-    //     } else {
-    //         System.out.println("Client still exists.");
-    //     }
-    // }
-
-
-
-
-
-
 
 }

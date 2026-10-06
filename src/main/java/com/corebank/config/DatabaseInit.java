@@ -52,6 +52,42 @@ public class DatabaseInit {
                 FOREIGN KEY (destinationAccountId) REFERENCES accounts(id)
             )
             """;
+
+        String createPaymentsTable = """
+            CREATE TABLE IF NOT EXISTS payments (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                accountId INTEGER NOT NULL,
+                entity TEXT NOT NULL,
+                reference TEXT NOT NULL,
+                amount REAL NOT NULL,
+                date TEXT NOT NULL,
+                status TEXT NOT NULL,
+                FOREIGN KEY (accountId) REFERENCES accounts(id)
+            )
+            """;
+
+            String createEmployeesTable = """
+                CREATE TABLE IF NOT EXISTS employees (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT NOT NULL UNIQUE,
+                    phoneNumber TEXT,
+                    status TEXT NOT NULL
+                )
+                """;
+            
+            String createUsersTable = """
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL UNIQUE,
+                    password TEXT NOT NULL,
+                    role TEXT NOT NULL,
+                    clientId INTEGER,
+                    employeeId INTEGER,
+                    FOREIGN KEY (clientId) REFERENCES clients(id),
+                    FOREIGN KEY (employeeId) REFERENCES employees(id)
+                )
+                """;
         
         try (
             Connection conn = DatabaseConfig.connect();
@@ -61,6 +97,9 @@ public class DatabaseInit {
             stmt.execute(sqlAccounts);
             stmt.execute(sqlTransactions);
             stmt.execute(sqlTransfers);
+            stmt.execute(createPaymentsTable);
+            stmt.execute(createEmployeesTable);
+            stmt.execute(createUsersTable);
 
             System.out.print("Tables created successfully!");
         }

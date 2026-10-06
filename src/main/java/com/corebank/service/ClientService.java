@@ -10,7 +10,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 
 // ------------------------------------------ CORE Rules -------------------------------------------
-
 @ApplicationScoped
 public class ClientService {
 
@@ -68,14 +67,12 @@ public class ClientService {
 
     public boolean createClient(Client client) {
 
-    if (!validateClient(client)) {
-        return false;
+        if (!validateClient(client)) {
+            return false;
+        }
+
+        return clientRepository.createClient(client);
     }
-
-    clientRepository.createClient(client);
-
-    return true;
-}
 
     // ------------------------------- List ---------------------------------
 
