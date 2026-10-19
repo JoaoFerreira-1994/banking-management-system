@@ -32,11 +32,105 @@ public class TransferController {
 
 
     // ------------------------------ TRANSFER ------------------------------
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response transfer(
+            @QueryParam("sourceIban") String sourceIban,
+            @QueryParam("destinationIban") String destinationIban,
+            @QueryParam("amount") Double amount,
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isClient(user) && !AuthUtil.isEmployee(user)) {
+            return Response.status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (sourceIban == null || sourceIban.isBlank() ||
+            destinationIban == null || destinationIban.isBlank() ||
+            amount == null || !Double.isFinite(amount) || amount <= 0) {
+
+            return Response.status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Invalid transfer details.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        sourceIban = sourceIban.replaceAll("\\s+", "").toUpperCase();
+        destinationIban = destinationIban.replaceAll("\\s+", "").toUpperCase();
+
+        Account sourceAccount =
+            accountService.findAccountByIban(sourceIban);
+
+        Account destinationAccount =
+            accountService.findAccountByIban(destinationIban);
+
+        if (sourceAccount == null || destinationAccount == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                .entity("{\"error\":\"Account not found.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (sourceAccount.getId() == destinationAccount.getId()) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Source and destination accounts must be different.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (AuthUtil.isClient(user)) {
+
+            if (user.getClientId() == null ||
+                !user.getClientId().equals(sourceAccount.getClientId())) {
+
+                return Response.status(Response.Status.FORBIDDEN)
+                    .entity("{\"error\":\"Access denied.\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+            }
+        }
+
+        boolean success = transferService.transfer(
+            sourceAccount.getId(),
+            destinationAccount.getId(),
+            amount
+        );
+
+        if (!success) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Transfer could not be completed.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        return Response.ok(
+            "{\"message\":\"Transfer completed successfully.\"}"
+        )
+        .type(MediaType.APPLICATION_JSON)
+        .build();
+    }
+
+
+    // ------------------------------ TRANSFER BY IBAN ------------------------------
+
+    @POST
+    @Path("/iban")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response transferByIban(
             @QueryParam("sourceAccountId") Integer sourceAccountId,
-            @QueryParam("destinationAccountId") Integer destinationAccountId,
+            @QueryParam("destinationIban") String destinationIban,
             @QueryParam("amount") Double amount,
             @HeaderParam("Authorization") String authorization) {
 
@@ -50,64 +144,41 @@ public class TransferController {
                 .build();
         }
 
-        if (sourceAccountId == null) {
+        if (!AuthUtil.isClient(user)) {
             return Response
-                .status(Response.Status.BAD_REQUEST)
-                .entity("{\"error\":\"Source account ID is required.\"}")
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
                 .type(MediaType.APPLICATION_JSON)
                 .build();
         }
 
-        if (destinationAccountId == null) {
+        if (sourceAccountId == null ||
+            destinationIban == null ||
+            destinationIban.isBlank() ||
+            amount == null ||
+            !Double.isFinite(amount) ||
+            amount <= 0) {
+
             return Response
                 .status(Response.Status.BAD_REQUEST)
-                .entity("{\"error\":\"Destination account ID is required.\"}")
+                .entity("{\"error\":\"Invalid transfer details.\"}")
                 .type(MediaType.APPLICATION_JSON)
                 .build();
         }
 
-        if (amount == null) {
+        Account sourceAccount =
+            accountService.findAccountID(sourceAccountId);
+
+        if (sourceAccount == null) {
             return Response
-                .status(Response.Status.BAD_REQUEST)
-                .entity("{\"error\":\"Amount is required.\"}")
+                .status(Response.Status.NOT_FOUND)
+                .entity("{\"error\":\"Source account not found.\"}")
                 .type(MediaType.APPLICATION_JSON)
                 .build();
         }
 
-        if (amount <= 0) {
-            return Response
-                .status(Response.Status.BAD_REQUEST)
-                .entity("{\"error\":\"Amount must be greater than zero.\"}")
-                .type(MediaType.APPLICATION_JSON)
-                .build();
-        }
-
-        // CLIENT can only transfer from their own account
-        if (AuthUtil.isClient(user)) {
-
-            Account sourceAccount =
-                accountService.findAccountID(sourceAccountId);
-
-            if (sourceAccount == null) {
-                return Response
-                    .status(Response.Status.NOT_FOUND)
-                    .entity("{\"error\":\"Source account not found.\"}")
-                    .type(MediaType.APPLICATION_JSON)
-                    .build();
-            }
-
-            if (user.getClientId() == null ||
-                user.getClientId() != sourceAccount.getClientId()) {
-
-                return Response
-                    .status(Response.Status.FORBIDDEN)
-                    .entity("{\"error\":\"Access denied.\"}")
-                    .type(MediaType.APPLICATION_JSON)
-                    .build();
-            }
-        }
-
-        else if (!AuthUtil.isEmployee(user)) {
+        if (user.getClientId() == null ||
+            !user.getClientId().equals(sourceAccount.getClientId())) {
 
             return Response
                 .status(Response.Status.FORBIDDEN)
@@ -116,9 +187,31 @@ public class TransferController {
                 .build();
         }
 
+        String normalizedIban =
+            destinationIban.replaceAll("\\s+", "").toUpperCase();
+
+        Account destinationAccount =
+            accountService.findAccountByIban(normalizedIban);
+
+        if (destinationAccount == null) {
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("{\"error\":\"Destination account not found.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (sourceAccountId == destinationAccount.getId()) {
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Source and destination accounts must be different.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
         boolean success = transferService.transfer(
             sourceAccountId,
-            destinationAccountId,
+            destinationAccount.getId(),
             amount
         );
 

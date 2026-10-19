@@ -7,9 +7,11 @@ import java.util.List;
 
 import com.corebank.config.DatabaseConfig;
 import com.corebank.model.Account;
+import com.corebank.model.Client;
 import com.corebank.model.Payment;
 import com.corebank.model.Transaction;
 import com.corebank.repository.AccountRepository;
+import com.corebank.repository.ClientRepository;
 import com.corebank.repository.PaymentRepository;
 import com.corebank.repository.TransactionRepository;
 
@@ -19,6 +21,7 @@ public class PaymentService {
     private AccountRepository accountRepository;
     private PaymentRepository paymentRepository;
     private TransactionRepository transactionRepository;
+    private final ClientRepository clientRepository = new ClientRepository();
 
     public PaymentService() {
         accountRepository = new AccountRepository();
@@ -46,6 +49,20 @@ public class PaymentService {
             return false;
         }
 
+        
+        Client client = clientRepository.findClientID(account.getClientId());
+
+        if (client == null) {
+            System.out.println("Client not found.");
+            return false;
+        }
+
+        if (!"ACTIVE".equalsIgnoreCase(client.getStatus())) {
+            System.out.println("Client is not active.");
+            return false;
+        }
+
+
         if (entity == null || entity.trim().isEmpty()) {
             System.out.println("Entity is required.");
             return false;
@@ -56,8 +73,8 @@ public class PaymentService {
             return false;
         }
 
-        if (amount <= 0) {
-            System.out.println("Amount must be greater than zero.");
+        if (!Double.isFinite(amount) || amount <= 0) {
+            System.out.println("Invalid payment amount.");
             return false;
         }
 

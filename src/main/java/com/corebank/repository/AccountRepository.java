@@ -130,6 +130,86 @@ public class AccountRepository {
         return null;
     }
 
+    // ------------------------------ FIND ACCOUNT BY CLIENT ID ------------------------------
+
+    public List<Account> findByClientId(int clientId) {
+
+        List<Account> accounts = new ArrayList<>();
+
+        String sql = "SELECT * FROM accounts WHERE clientId = ?";
+
+        try (
+            Connection conn = DatabaseConfig.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setInt(1, clientId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+
+                    Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("iban"),
+                        rs.getString("accountType"),
+                        rs.getDouble("balance"),
+                        rs.getString("status"),
+                        rs.getInt("clientId")
+                    );
+
+                    accounts.add(account);
+                }
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(
+                "Error finding client accounts: " + e.getMessage()
+            );
+        }
+
+        return accounts;
+    }
+
+    // ------------------------------ FIND BY IBAN ------------------------------
+
+    public Account findAccountByIban(String iban) {
+
+        String sql = "SELECT * FROM accounts WHERE iban = ?";
+
+        try (
+            Connection conn = DatabaseConfig.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, iban);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                if (rs.next()) {
+
+                    return new Account(
+                        rs.getInt("id"),
+                        rs.getString("iban"),
+                        rs.getString("accountType"),
+                        rs.getDouble("balance"),
+                        rs.getString("status"),
+                        rs.getInt("clientId")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(
+                "Error finding account by IBAN: " + e.getMessage()
+            );
+        }
+
+        return null;
+    }
+
     // ------------------------------ UPDATE ------------------------------
 
     public void updateAccount(Account account) {
@@ -165,6 +245,37 @@ public class AccountRepository {
             );
         }
     }
+
+    
+    // ------------------------- UPDATE ACCOUNT STATUS -------------------------
+
+    public boolean updateAccountStatus(int id, String status) {
+
+        String sql = """
+            UPDATE accounts
+            SET status = ?
+            WHERE id = ?
+            """;
+
+        try (
+            Connection conn = DatabaseConfig.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, status);
+            stmt.setInt(2, id);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+
+            System.out.println("Error updating account status: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     // ------------------------------ DELETE ------------------------------
 

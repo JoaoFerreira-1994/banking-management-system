@@ -14,7 +14,7 @@ public class EmployeeRepository {
 
     // ------------------------------ CREATE ------------------------------
 
-    public void createEmployee(Employee employee) {
+    public boolean createEmployee(Employee employee) {
 
         String sql = """
             INSERT INTO employees
@@ -32,7 +32,11 @@ public class EmployeeRepository {
             stmt.setString(3, employee.getPhoneNumber());
             stmt.setString(4, employee.getStatus());
 
-            stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
+
+            if (rows == 0) {
+                return false;
+            }
 
             try (
                 PreparedStatement idStmt =
@@ -44,10 +48,15 @@ public class EmployeeRepository {
                 }
             }
 
-            System.out.println("Employee created successfully!");
+            return employee.getId() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Error creating employee: " + e.getMessage());
+
+            System.out.println(
+                "Error creating employee: " + e.getMessage()
+            );
+
+            return false;
         }
     }
 

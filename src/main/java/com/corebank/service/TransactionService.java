@@ -7,14 +7,17 @@ import java.util.List;
 
 import com.corebank.config.DatabaseConfig;
 import com.corebank.model.Account;
+import com.corebank.model.Client;
 import com.corebank.model.Transaction;
 import com.corebank.repository.AccountRepository;
+import com.corebank.repository.ClientRepository;
 import com.corebank.repository.TransactionRepository;
 
 public class TransactionService {
 
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
+    private final ClientRepository clientRepository = new ClientRepository();
 
     public TransactionService() {
         transactionRepository = new TransactionRepository();
@@ -35,6 +38,18 @@ public class TransactionService {
 
         if (!"ACTIVE".equalsIgnoreCase(account.getStatus())) {
             System.out.println("Account is not active.");
+            return false;
+        }
+
+        Client client = clientRepository.findClientID(account.getClientId());
+
+        if (client == null) {
+            System.out.println("Client not found.");
+            return false;
+        }
+
+        if (!"ACTIVE".equalsIgnoreCase(client.getStatus())) {
+            System.out.println("Client is not active.");
             return false;
         }
 
@@ -114,6 +129,18 @@ public class TransactionService {
 
         if (!"ACTIVE".equalsIgnoreCase(account.getStatus())) {
             System.out.println("Account is not active.");
+            return false;
+        }
+
+        Client client = clientRepository.findClientID(account.getClientId());
+
+        if (client == null) {
+            System.out.println("Client not found.");
+            return false;
+        }
+
+        if (!"ACTIVE".equalsIgnoreCase(client.getStatus())) {
+            System.out.println("Client is not active.");
             return false;
         }
 

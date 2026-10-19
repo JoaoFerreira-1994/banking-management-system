@@ -17,6 +17,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -98,6 +99,48 @@ public class ClientController {
         return Response
             .status(Response.Status.CREATED)
             .entity(client)
+            .build();
+    }
+
+
+    
+    // ------------------------- MY PROFILE -------------------------
+    @GET
+    @Path("/my")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMyProfile(
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isClient(user) || user.getClientId() == null) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        Client client = clientService.findClientID(user.getClientId());
+
+        if (client == null) {
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("{\"error\":\"Client not found.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        return Response
+            .ok(client)
             .build();
     }
 
@@ -206,6 +249,66 @@ public class ClientController {
             .ok(client)
             .build();
     }
+
+    
+    // ------------------------- UPDATE CLIENT STATUS -------------------------
+    @PUT
+    @Path("/{id}/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateClientStatus(
+            @PathParam("id") int id,
+            @QueryParam("status") String status,
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .build();
+        }
+
+        if (!AuthUtil.isEmployee(user)) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .build();
+        }
+
+        if (status == null ||
+            (!status.equalsIgnoreCase("ACTIVE") &&
+             !status.equalsIgnoreCase("INACTIVE"))) {
+
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Invalid client status.\"}")
+                .build();
+        }
+
+        Client client = clientService.findClientID(id);
+
+        if (client == null) {
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("{\"error\":\"Client not found.\"}")
+                .build();
+        }
+
+        boolean updated = clientService.updateClientStatus(id, status);
+
+        if (!updated) {
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Could not update client status.\"}")
+                .build();
+        }
+
+        return Response
+            .ok("{\"message\":\"Client status updated successfully.\"}")
+            .build();
+    }
+
 
 
     // ------------------------- DELETE CLIENT -------------------------

@@ -62,23 +62,6 @@ public class ClientRepository {
         }
     }
 
-    // ---------------------------------- CÓDIGO DE TESTE -----------------------------------------
-
-    // public static void main(String[] args) {
-
-    //     Client client = new Client(
-    //         0,
-    //         "John p silva",
-    //         "623456900",
-    //         "john@email.com",
-    //         "912345678",
-    //         "ACTIVE"
-    //     );
-
-    //     ClientRepository repository = new ClientRepository();
-
-    //     repository.createClient(client);
-    // }
 
 // ---------------------------------- LIST -----------------------------------------
 
@@ -113,29 +96,6 @@ public class ClientRepository {
         return clients;
     }
 
-    // ---------------------------------- CÓDIGO DE TESTE -----------------------------------------
-
-    // public static void main(String[] args) {
-
-    //     ClientRepository repository = new ClientRepository();
-
-    //     List<Client> clients = repository.listClients();
-
-    //     System.out.println("Number of clients: " + clients.size());
-        
-    //     for (Client client : clients) {
-
-    //         System.out.println(
-    //             client.getId() + " | " +
-    //             client.getName() + " | " +
-    //             client.getNif() + " | " +
-    //             client.getEmail() + " | " +
-    //             client.getPhoneNumber() + " | " +
-    //             client.getStatus()
-    //         );
-    //     }
-    // }
-
 // ---------------------------------- Find by ID -----------------------------------------
 
     public Client findClientID(int id){
@@ -166,28 +126,6 @@ public class ClientRepository {
         return null;
         }
     }
-
-    // ---------------------------------- CÓDIGO DE TESTE -----------------------------------------
-
-//     public static void main(String[] args) {
-
-//     ClientRepository repository = new ClientRepository();
-
-//     Client client = repository.findClientID(999);
-
-//     if (client != null) {
-//         System.out.println(
-//             client.getId() + " | " +
-//             client.getName() + " | " +
-//             client.getNif() + " | " +
-//             client.getEmail() + " | " +
-//             client.getPhoneNumber() + " | " +
-//             client.getStatus()
-//         );
-//     } else {
-//         System.out.println("Client not found.");
-//     }
-// }
     
 // ---------------------------------- Update -----------------------------------------
 
@@ -223,37 +161,36 @@ public class ClientRepository {
         catch (SQLException e) {System.out.println("Error updating client: " + e.getMessage());}
     }
 
-    // ---------------------------------- CÓDIGO DE TESTE -----------------------------------------
 
-//     public static void main(String[] args) {
+    // ------------------------- UPDATE CLIENT STATUS -------------------------
 
-//     ClientRepository repository = new ClientRepository();
+    public boolean updateClientStatus(int id, String status) {
 
-//     Client client = repository.findClientID(1);
+        String sql = """
+            UPDATE clients
+            SET status = ?
+            WHERE id = ?
+            """;
 
-//     if (client != null) {
+        try (
+            Connection conn = DatabaseConfig.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
 
-//         client.setName("John Updated");
-//         client.setEmail("john.updated@email.com");
-//         client.setPhoneNumber("919999999");
+            stmt.setString(1, status);
+            stmt.setInt(2, id);
 
-//         repository.updateClient(client);
+            int rowsAffected = stmt.executeUpdate();
 
-//         Client updatedClient = repository.findClientID(1);
+            return rowsAffected > 0;
 
-//         System.out.println(
-//             updatedClient.getId() + " | " +
-//             updatedClient.getName() + " | " +
-//             updatedClient.getNif() + " | " +
-//             updatedClient.getEmail() + " | " +
-//             updatedClient.getPhoneNumber() + " | " +
-//             updatedClient.getStatus()
-//         );
+        } catch (SQLException e) {
 
-//     } else {
-//         System.out.println("Client not found.");
-//     }
-// }
+            System.out.println("Error updating client status: " + e.getMessage());
+            return false;
+        }
+    }
+
 
 // ---------------------------------- Delete -----------------------------------------
 

@@ -16,6 +16,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -54,6 +55,48 @@ public class AccountController {
         }
 
         List<Account> accounts = accountService.listAccounts();
+
+        return Response
+            .ok(accounts)
+            .build();
+    }
+
+    // ------------------------------ MY ACCOUNTS ------------------------------
+    @GET
+    @Path("/my")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMyAccounts(
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isClient(user)) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        Integer clientId = user.getClientId();
+
+        if (clientId == null) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Client not associated with user.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        List<Account> accounts = accountService.findByClientId(clientId);
 
         return Response
             .ok(accounts)
@@ -210,6 +253,73 @@ public class AccountController {
             .ok(updatedAccount)
             .build();
     }
+
+    
+    // ------------------------- UPDATE ACCOUNT STATUS -------------------------
+    @PUT
+    @Path("/{id}/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAccountStatus(
+            @PathParam("id") int id,
+            @QueryParam("status") String status,
+            @HeaderParam("Authorization") String authorization) {
+
+        User user = AuthUtil.getAuthenticatedUser(authorization);
+
+        if (user == null) {
+            return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Unauthorized.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (!AuthUtil.isEmployee(user)) {
+            return Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("{\"error\":\"Access denied.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        if (status == null ||
+            (!status.equalsIgnoreCase("ACTIVE") &&
+             !status.equalsIgnoreCase("INACTIVE"))) {
+
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\":\"Invalid account status.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        Account existingAccount = accountService.findAccountID(id);
+
+        if (existingAccount == null) {
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("{\"error\":\"Account not found.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        boolean updated = accountService.updateAccountStatus(id, status);
+
+        if (!updated) {
+            return Response
+                .status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity("{\"error\":\"Could not update account status.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+        }
+
+        Account updatedAccount = accountService.findAccountID(id);
+
+        return Response
+            .ok(updatedAccount)
+            .build();
+    }
+
 
 
     // ------------------------------ DELETE ------------------------------

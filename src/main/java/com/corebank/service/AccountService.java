@@ -98,6 +98,20 @@ public class AccountService {
         return accountRepository.findAccountID(id);
     }
 
+    // ------------------------------ FIND ACCOUNT BY CLIENT ID ------------------------------
+
+    public List<Account> findByClientId(int clientId) {
+
+        return accountRepository.findByClientId(clientId);
+    }
+
+    // ------------------------------ FIND BY IBAN ------------------------------
+
+    public Account findAccountByIban(String iban) {
+
+        return accountRepository.findAccountByIban(iban);
+    }
+
     // ------------------------------ UPDATE ------------------------------
 
     public void updateAccount(Account account) {
@@ -123,6 +137,38 @@ public class AccountService {
 
         accountRepository.updateAccount(account);
     }
+
+    
+    // ------------------------- UPDATE ACCOUNT STATUS -------------------------
+
+    public boolean updateAccountStatus(int id, String status) {
+
+        if (id <= 0) {
+            System.out.println("Invalid account ID.");
+            return false;
+        }
+
+        if (status == null ||
+            (!status.equalsIgnoreCase("ACTIVE") &&
+             !status.equalsIgnoreCase("INACTIVE"))) {
+
+            System.out.println("Invalid account status.");
+            return false;
+        }
+
+        Account existingAccount = accountRepository.findAccountID(id);
+
+        if (existingAccount == null) {
+            System.out.println("Account not found.");
+            return false;
+        }
+
+        return accountRepository.updateAccountStatus(
+            id,
+            status.toUpperCase()
+        );
+    }
+
 
     // ------------------------------ DELETE ------------------------------
 

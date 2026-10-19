@@ -39,9 +39,7 @@ public class EmployeeService {
 
         employee.setStatus("ACTIVE");
 
-        employeeRepository.createEmployee(employee);
-
-        return employee.getId() > 0;
+        return employeeRepository.createEmployee(employee);
     }
 
 

@@ -7,9 +7,11 @@ import java.util.List;
 
 import com.corebank.config.DatabaseConfig;
 import com.corebank.model.Account;
+import com.corebank.model.Client;
 import com.corebank.model.Transaction;
 import com.corebank.model.Transfer;
 import com.corebank.repository.AccountRepository;
+import com.corebank.repository.ClientRepository;
 import com.corebank.repository.TransactionRepository;
 import com.corebank.repository.TransferRepository;
 
@@ -18,6 +20,7 @@ public class TransferService {
     private AccountRepository accountRepository;
     private TransferRepository transferRepository;
     private TransactionRepository transactionRepository;
+    private final ClientRepository clientRepository = new ClientRepository();
 
     public TransferService() {
         accountRepository = new AccountRepository();
@@ -74,6 +77,36 @@ public class TransferService {
             System.out.println("Destination account is not active.");
             return false;
         }
+
+        
+        // Validate source client
+        Client sourceClient =
+            clientRepository.findClientID(sourceAccount.getClientId());
+
+        if (sourceClient == null) {
+            System.out.println("Source client not found.");
+            return false;
+        }
+
+        if (!"ACTIVE".equalsIgnoreCase(sourceClient.getStatus())) {
+            System.out.println("Source client is not active.");
+            return false;
+        }
+
+        // Validate destination client
+        Client destinationClient =
+            clientRepository.findClientID(destinationAccount.getClientId());
+
+        if (destinationClient == null) {
+            System.out.println("Destination client not found.");
+            return false;
+        }
+
+        if (!"ACTIVE".equalsIgnoreCase(destinationClient.getStatus())) {
+            System.out.println("Destination client is not active.");
+            return false;
+        }
+
 
         // Validate balance
         if (sourceAccount.getBalance() < amount) {

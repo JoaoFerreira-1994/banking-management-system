@@ -105,4 +105,35 @@ public class UserRepository {
 
         return null;
     }
+ 
+    // ------------------------------ UPDATE PASSWORD ------------------------------
+
+    public boolean updatePassword(int userId, String hashedPassword) {
+
+        String sql = """
+            UPDATE users
+            SET password = ?
+            WHERE id = ?
+            """;
+
+        try (
+            Connection conn = DatabaseConfig.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, hashedPassword);
+            stmt.setInt(2, userId);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+
+            System.out.println(
+                "Error updating password: " + e.getMessage()
+            );
+
+            return false;
+        }
+    }
+
 }

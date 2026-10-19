@@ -17,49 +17,6 @@ public class PaymentRepository {
     private static final DateTimeFormatter DATE_FORMATTER =
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-
-    // ------------------------------ CREATE ------------------------------
-
-    public void createPayment(Payment payment) {
-
-        String sql = """
-            INSERT INTO payments
-            (accountId, entity, reference, amount, date, status)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """;
-
-        try (
-            Connection conn = DatabaseConfig.connect();
-            PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-
-            stmt.setInt(1, payment.getAccountId());
-            stmt.setString(2, payment.getEntity());
-            stmt.setString(3, payment.getReference());
-            stmt.setDouble(4, payment.getAmount());
-            stmt.setString(5, payment.getDate().format(DATE_FORMATTER));
-            stmt.setString(6, payment.getStatus());
-
-            stmt.executeUpdate();
-
-            try (
-                PreparedStatement idStmt =
-                    conn.prepareStatement("SELECT last_insert_rowid()");
-                ResultSet rs = idStmt.executeQuery()
-            ) {
-                if (rs.next()) {
-                    payment.setId(rs.getInt(1));
-                }
-            }
-
-            System.out.println("Payment created successfully!");
-
-        } catch (SQLException e) {
-            System.out.println("Error creating payment: " + e.getMessage());
-        }
-    }
-
-
     // ------------------------------ CREATE WITH CONNECTION ------------------------------
 
     public void createPayment(

@@ -111,6 +111,38 @@ public class ClientService {
         clientRepository.updateClient(client);
     }
 
+    
+    // ------------------------- UPDATE CLIENT STATUS -------------------------
+
+    public boolean updateClientStatus(int id, String status) {
+
+        if (id <= 0) {
+            System.out.println("Invalid client ID.");
+            return false;
+        }
+
+        if (status == null ||
+            (!status.equalsIgnoreCase("ACTIVE") &&
+             !status.equalsIgnoreCase("INACTIVE"))) {
+
+            System.out.println("Invalid client status.");
+            return false;
+        }
+
+        Client existingClient = clientRepository.findClientID(id);
+
+        if (existingClient == null) {
+            System.out.println("Client not found.");
+            return false;
+        }
+
+        return clientRepository.updateClientStatus(
+            id,
+            status.toUpperCase()
+        );
+    }
+
+
 
     // ------------------------------- Delete ---------------------------------
 

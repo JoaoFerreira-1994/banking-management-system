@@ -13,7 +13,6 @@ public class AuthService {
     }
 
 
-    // ------------------------------ LOGIN ------------------------------
 
     public User login(String username, String password) {
 
@@ -34,12 +33,23 @@ public class AuthService {
             return null;
         }
 
-        String hashedPassword =
-            PasswordUtil.hashPassword(password);
-
-        if (!hashedPassword.equals(user.getPassword())) {
+        // Verify password (SHA-256 or PBKDF2)
+        if (!PasswordUtil.verifyPassword(password, user.getPassword())) {
             System.out.println("Invalid username or password.");
             return null;
+        }
+
+        // Migrate legacy SHA-256 password to PBKDF2
+        if (PasswordUtil.isLegacyHash(user.getPassword())) {
+
+            String newHash = PasswordUtil.hashPassword(password);
+
+            if (!userRepository.updatePassword(user.getId(), newHash)) {
+                System.out.println("Error upgrading password security.");
+                return null;
+            }
+
+            user.setPassword(newHash);
         }
 
         System.out.println("Login successful!");

@@ -169,7 +169,7 @@ public class PaymentController {
                 .build();
         }
 
-        if (amount == null || amount <= 0) {
+        if (amount == null || !Double.isFinite(amount) || amount <= 0) {
             return Response
                 .status(Response.Status.BAD_REQUEST)
                 .entity("{\"error\":\"Amount must be greater than zero.\"}")
@@ -192,7 +192,7 @@ public class PaymentController {
             }
 
             if (user.getClientId() == null ||
-                user.getClientId() != account.getClientId()) {
+                !user.getClientId().equals(account.getClientId())) {
 
                 return Response
                     .status(Response.Status.FORBIDDEN)

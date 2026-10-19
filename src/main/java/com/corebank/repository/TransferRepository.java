@@ -104,7 +104,7 @@ public class TransferRepository {
                 transfer.setId(rs.getInt(1));
             }
         }
-}
+    }
 
     // ------------------------------ LIST ------------------------------
 
