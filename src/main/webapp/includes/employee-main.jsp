@@ -5,102 +5,63 @@
     <aside class="sidebar">
 
         <div class="sidebar-logo">
-            <img
-                src="${pageContext.request.contextPath}/images/core-bank-logo.png"
-                alt="Core Bank">
+            <img src="${pageContext.request.contextPath}/images/core-bank-logo.png" alt="Core Bank">
         </div>
 
         <nav>
-
-            <button
-                type="button"
-                class="menu-button active"
-                id="homeButton">
+            <button type="button" class="menu-button active" id="homeButton">
                 Home
             </button>
 
-            <button
-                type="button"
-                class="menu-button"
-                id="clientsButton">
+            <button type="button" class="menu-button" id="clientsButton">
                 Clients
             </button>
 
-            <button
-                type="button"
-                class="menu-button"
-                id="accountsButton">
+            <button type="button" class="menu-button" id="accountsButton">
                 Accounts
             </button>
 
-            <button
-                type="button"
-                class="menu-button"
-                id="transactionsButton">
+            <button type="button" class="menu-button" id="transactionsButton">
                 Transactions
             </button>
 
-            <button
-                type="button"
-                class="menu-button"
-                id="transfersButton">
+            <button type="button" class="menu-button" id="transfersButton">
                 Transfers
             </button>
 
-            <button
-                type="button"
-                class="menu-button"
-                id="paymentsButton">
+            <button type="button" class="menu-button" id="paymentsButton">
                 Payments
             </button>
 
-            <button
-                type="button"
-                class="menu-button"
-                id="employeesButton">
+            <button type="button" class="menu-button" id="employeesButton">
                 Employees
             </button>
-
         </nav>
-
     </aside>
 
 
     <!-- ==================== MAIN AREA ==================== -->
-
     <main class="main-area">
 
         <!-- TOP BAR -->
-
         <header class="top-bar">
 
-            <h2 class="mb-0">
-                Employee Area
-            </h2>
+            <h2 class="mb-0"> Employee Area </h2>
 
             <div class="user-area">
-
                 <span id="username"></span>
 
-                <button
-                    type="button"
-                    id="logoutButton"
-                    class="btn btn-outline-primary">
+                <button type="button" id="logoutButton" class="btn btn-outline-primary">
                     Logout
                 </button>
-
             </div>
-
         </header>
 
 
         <!-- ==================== CONTENT ==================== -->
-
         <div class="content">
 
-
             <!-- ==================== HOME ==================== -->
-
             <section id="homeSection">
 
                 <h2>Welcome to Core Bank</h2>
@@ -111,99 +72,63 @@
                 </p>
 
                 <div class="row g-4 mt-2">
-
                     <div class="col-md-6 col-xl-4">
-
                         <div class="card h-100 shadow-sm">
-
                             <div class="card-body">
-
                                 <h5 class="card-title">
                                     Clients
                                 </h5>
-
                                 <p class="card-text text-secondary">
                                     Manage Core Bank clients.
                                 </p>
-
                             </div>
-
                         </div>
-
                     </div>
 
-
                     <div class="col-md-6 col-xl-4">
-
                         <div class="card h-100 shadow-sm">
-
                             <div class="card-body">
-
                                 <h5 class="card-title">
                                     Accounts
                                 </h5>
-
                                 <p class="card-text text-secondary">
                                     Manage client bank accounts.
                                 </p>
-
                             </div>
-
                         </div>
-
                     </div>
 
 
                     <div class="col-md-6 col-xl-4">
-
                         <div class="card h-100 shadow-sm">
-
                             <div class="card-body">
-
                                 <h5 class="card-title">
                                     Operations
                                 </h5>
-
                                 <p class="card-text text-secondary">
                                     Manage transactions, transfers and payments.
                                 </p>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </section>
 
 
             <!-- ==================== CLIENTS ==================== -->
 
-            <section
-                id="clientsSection"
-                class="d-none">
+            <section id="clientsSection" class="d-none">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-
                     <div>
-
-                        <h2 class="mb-1">
-                            Clients
-                        </h2>
+                        <h2 class="mb-1"> Clients </h2>
 
                         <p class="text-secondary mb-0">
                             Manage Core Bank clients.
                         </p>
-
                     </div>
 
-
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="addClientButton">
+                    <button type="button" class="btn btn-primary" id="addClientButton">
                         + Add Client
                     </button>
 
@@ -211,11 +136,7 @@
 
 
                 <!-- CLIENT LIST -->
-
-                <div
-                    id="clientsList"
-                    class="row g-4">
-                </div>
+                <div id="clientsList" class="row g-4"></div>
 
                 <!-- CLIENT CARD TEMPLATE -->
                 <template id="clientCardTemplate">
@@ -240,105 +161,59 @@
                 </template>
 
 
-
                 <!-- ADD CLIENT FORM -->
-
-                <div
-                    id="clientFormContainer"
-                    class="card shadow-sm mt-4 d-none">
+                <div id="clientFormContainer" class="card shadow-sm mt-4 d-none">
 
                     <div class="card-body p-4">
-
-                        <h4 class="mb-4">
-                            Add Client
-                        </h4>
+                        <h4 class="mb-4">Add Client</h4>
 
 
                         <form id="clientForm">
-
                             <div class="row">
 
                                 <div class="col-md-6 mb-3">
 
-                                    <label
-                                        for="clientName"
-                                        class="form-label">
+                                    <label for="clientName" class="form-label">
                                         Name
                                     </label>
 
-                                    <input
-                                        type="text"
-                                        id="clientName"
-                                        class="form-control"
-                                        required>
-
+                                    <input type="text" id="clientName" class="form-control" required>
                                 </div>
 
 
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="clientNif"
-                                        class="form-label">
+                                    <label for="clientNif" class="form-label">
                                         NIF
                                     </label>
 
-                                    <input
-                                        type="text"
-                                        id="clientNif"
-                                        class="form-control"
-                                        maxlength="9"
-                                        required>
-
+                                    <input type="text" id="clientNif" class="form-control" maxlength="9"required>
                                 </div>
 
 
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="clientEmail"
-                                        class="form-label">
+                                    <label for="clientEmail" class="form-label">
                                         Email
                                     </label>
 
-                                    <input
-                                        type="email"
-                                        id="clientEmail"
-                                        class="form-control"
-                                        required>
-
+                                    <input type="email" id="clientEmail" class="form-control" required>
                                 </div>
 
 
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="clientPhone"
-                                        class="form-label">
+                                    <label for="clientPhone" class="form-label">
                                         Phone Number
                                     </label>
 
-                                    <input
-                                        type="text"
-                                        id="clientPhone"
-                                        class="form-control"
-                                        maxlength="9"
-                                        required>
-
+                                    <input type="text" id="clientPhone" class="form-control" maxlength="9" required>
                                 </div>
 
 
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="clientStatus"
-                                        class="form-label">
+                                    <label for="clientStatus" class="form-label">
                                         Status
                                     </label>
 
-                                    <select
-                                        id="clientStatus"
-                                        class="form-select">
+                                    <select id="clientStatus" class="form-select">
 
                                         <option value="ACTIVE">
                                             ACTIVE
@@ -349,81 +224,47 @@
                                         </option>
 
                                     </select>
-
                                 </div>
-
                             </div>
 
 
-                            <p
-                                id="clientMessage"
-                                class="text-danger">
-                            </p>
-
+                            <p id="clientMessage" class="text-danger"></p>
 
                             <div class="d-flex justify-content-end gap-2">
 
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-secondary"
-                                    id="cancelClientButton">
+                                <button type="button" class="btn btn-outline-secondary" id="cancelClientButton">
                                     Cancel
                                 </button>
 
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary">
                                     Create Client
                                 </button>
-
                             </div>
-
                         </form>
-
                     </div>
-
                 </div>
-
             </section>
 
 
             <!-- ==================== ACCOUNTS ==================== -->
-
-            <section
-                id="accountsSection"
-                class="d-none">
+            <section id="accountsSection" class="d-none">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-
                     <div>
+                        <h2 class="mb-1">Accounts</h2>
 
-                        <h2 class="mb-1">
-                            Accounts
-                        </h2>
-
-                        <p class="text-secondary mb-0">
-                            Manage Core Bank accounts.
-                        </p>
-
+                        <p class="text-secondary mb-0">Manage Core Bank accounts.</p>
                     </div>
 
 
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="addAccountButton">
+                    <button type="button" class="btn btn-primary" id="addAccountButton">
                         + Add Account
                     </button>
-
                 </div>
 
 
                 <!-- ACCOUNT LIST -->
-
-                <div
-                    id="accountsList"
-                    class="row g-4">
-                </div>
+                <div id="accountsList" class="row g-4"> </div>
 
                 <!-- ACCOUNT CARD TEMPLATE -->
                 <template id="accountCardTemplate">
@@ -468,76 +309,39 @@
 
 
                 <!-- ADD ACCOUNT FORM -->
-
-                <div
-                    id="accountFormContainer"
-                    class="card shadow-sm mt-4 d-none">
-
+                <div id="accountFormContainer" class="card shadow-sm mt-4 d-none">
                     <div class="card-body p-4">
-
-                        <h4 class="mb-4">
-                            Add Account
-                        </h4>
-
+                        <h4 class="mb-4">Add Account</h4>
 
                         <form id="accountForm">
-
                             <div class="row">
-
-
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="accountClient"
-                                        class="form-label">
+                                    <label for="accountClient" class="form-label">
                                         Client
                                     </label>
 
-                                    <select
-                                        id="accountClient"
-                                        class="form-select"
-                                        required>
-
+                                    <select id="accountClient" class="form-select" required>
                                         <option value="">
                                             Select a client
                                         </option>
-
                                     </select>
-
                                 </div>
 
 
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="accountIban"
-                                        class="form-label">
+                                    <label for="accountIban" class="form-label">
                                         IBAN
                                     </label>
 
-                                    <input
-                                        type="text"
-                                        id="accountIban"
-                                        class="form-control"
-                                        placeholder="PT50..."
-                                        required>
-
+                                    <input type="text" id="accountIban" class="form-control" placeholder="PT50..." required>
                                 </div>
 
-
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="accountType"
-                                        class="form-label">
+                                    <label for="accountType" class="form-label">
                                         Account Type
                                     </label>
 
-                                    <select
-                                        id="accountType"
-                                        class="form-select"
-                                        required>
-
+                                    <select id="accountType" class="form-select" required>
                                         <option value="CHECKING">
                                             CHECKING
                                         </option>
@@ -545,24 +349,15 @@
                                         <option value="SAVINGS">
                                             SAVINGS
                                         </option>
-
                                     </select>
-
                                 </div>
 
-
                                 <div class="col-md-6 mb-3">
-
-                                    <label
-                                        for="accountStatus"
-                                        class="form-label">
+                                    <label for="accountStatus" class="form-label">
                                         Status
                                     </label>
 
-                                    <select
-                                        id="accountStatus"
-                                        class="form-select">
-
+                                    <select id="accountStatus" class="form-select">
                                         <option value="ACTIVE">
                                             ACTIVE
                                         </option>
@@ -570,33 +365,183 @@
                                         <option value="INACTIVE">
                                             INACTIVE
                                         </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <p id="accountMessage" class="text-danger"> </p>
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-secondary" id="cancelAccountButton">
+                                    Cancel
+                                </button>
+
+                                <button type="submit" class="btn btn-primary">
+                                    Create Account
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ==================== TRANSACTIONS ==================== -->
+
+            <section
+                id="transactionsSection"
+                class="d-none">
+
+                <!-- HEADER -->
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h2 class="mb-1">
+                            Transactions
+                        </h2>
+
+                        <p class="text-secondary mb-0">
+                            Manage deposits and withdrawals.
+                        </p>
+
+                    </div>
+
+
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="button"
+                            class="btn btn-success"
+                            id="depositButton">
+                            + Deposit
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-outline-danger"
+                            id="withdrawalButton">
+                            - Withdrawal
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================== TRANSACTION FORM ==================== -->
+
+                <div
+                    id="transactionFormContainer"
+                    class="card shadow-sm mb-4 d-none">
+
+                    <div class="card-body p-4">
+
+                        <h4
+                            id="transactionFormTitle"
+                            class="mb-4">
+                            New Transaction
+                        </h4>
+
+
+                        <form id="transactionForm">
+
+                            <div class="row">
+
+                                <!-- ACCOUNT -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label
+                                        for="transactionAccount"
+                                        class="form-label">
+                                        Account
+                                    </label>
+
+                                    <select
+                                        id="transactionAccount"
+                                        class="form-select"
+                                        required>
+
+                                        <option value="">
+                                            Select an account
+                                        </option>
 
                                     </select>
+
+                                    <div class="mt-2">
+
+                                        <small class="text-secondary">
+                                            Current balance:
+                                        </small>
+
+                                        <strong
+                                            id="transactionAccountBalance"
+                                            class="ms-1">
+                                            -
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- AMOUNT -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label
+                                        for="transactionAmount"
+                                        class="form-label">
+                                        Amount
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            &euro;
+                                        </span>
+
+                                        <input
+                                            type="number"
+                                            id="transactionAmount"
+                                            class="form-control"
+                                            min="0.01"
+                                            step="0.01"
+                                            required>
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
 
+                            <!-- MESSAGE -->
+
                             <p
-                                id="accountMessage"
+                                id="transactionMessage"
                                 class="text-danger">
                             </p>
 
+
+                            <!-- BUTTONS -->
 
                             <div class="d-flex justify-content-end gap-2">
 
                                 <button
                                     type="button"
                                     class="btn btn-outline-secondary"
-                                    id="cancelAccountButton">
+                                    id="cancelTransactionButton">
                                     Cancel
                                 </button>
 
                                 <button
                                     type="submit"
-                                    class="btn btn-primary">
-                                    Create Account
+                                    class="btn btn-primary"
+                                    id="submitTransactionButton">
+                                    Confirm
                                 </button>
 
                             </div>
@@ -607,361 +552,265 @@
 
                 </div>
 
+
+                <!-- ==================== TRANSACTION LIST ==================== -->
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+
+                            <table class="table table-hover align-middle mb-0">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            ID
+                                        </th>
+
+                                        <th>
+                                            Account
+                                        </th>
+
+                                        <th>
+                                            Type
+                                        </th>
+
+                                        <th>
+                                            Amount
+                                        </th>
+
+                                        <th>
+                                            Date
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="transactionsList">
+
+                                    <!-- Transactions loaded with JavaScript -->
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </section>
 
 
-            <!-- ==================== TRANSACTIONS ==================== -->
+            <!-- ==================== TRANSFERS ==================== -->
 
-<section
-    id="transactionsSection"
-    class="d-none">
+            <section
+                id="transfersSection"
+                class="d-none">
 
-    <!-- HEADER -->
+                <!-- HEADER -->
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div>
+                    <div>
+                        <h2 class="mb-1">
+                            Transfers
+                        </h2>
 
-            <h2 class="mb-1">
-                Transactions
-            </h2>
-
-            <p class="text-secondary mb-0">
-                Manage deposits and withdrawals.
-            </p>
-
-        </div>
-
-
-        <div class="d-flex gap-2">
-
-            <button
-                type="button"
-                class="btn btn-success"
-                id="depositButton">
-                + Deposit
-            </button>
-
-            <button
-                type="button"
-                class="btn btn-outline-danger"
-                id="withdrawalButton">
-                - Withdrawal
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- ==================== TRANSACTION FORM ==================== -->
-
-    <div
-        id="transactionFormContainer"
-        class="card shadow-sm mb-4 d-none">
-
-        <div class="card-body p-4">
-
-            <h4
-                id="transactionFormTitle"
-                class="mb-4">
-                New Transaction
-            </h4>
-
-
-            <form id="transactionForm">
-
-                <div class="row">
-
-                    <!-- ACCOUNT -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label
-                            for="transactionAccount"
-                            class="form-label">
-                            Account
-                        </label>
-
-                        <select
-                            id="transactionAccount"
-                            class="form-select"
-                            required>
-
-                            <option value="">
-                                Select an account
-                            </option>
-
-                        </select>
-
-                        <div class="mt-2">
-
-                            <small class="text-secondary">
-                                Current balance:
-                            </small>
-
-                            <strong
-                                id="transactionAccountBalance"
-                                class="ms-1">
-                                -
-                            </strong>
-
-                        </div>
-
+                        <p class="text-secondary mb-0">
+                            Manage bank transfers.
+                        </p>
                     </div>
-
-
-                    <!-- AMOUNT -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label
-                            for="transactionAmount"
-                            class="form-label">
-                            Amount
-                        </label>
-
-                        <div class="input-group">
-
-                            <span class="input-group-text">
-                                &euro;
-                            </span>
-
-                            <input
-                                type="number"
-                                id="transactionAmount"
-                                class="form-control"
-                                min="0.01"
-                                step="0.01"
-                                required>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- MESSAGE -->
-
-                <p
-                    id="transactionMessage"
-                    class="text-danger">
-                </p>
-
-
-                <!-- BUTTONS -->
-
-                <div class="d-flex justify-content-end gap-2">
 
                     <button
                         type="button"
-                        class="btn btn-outline-secondary"
-                        id="cancelTransactionButton">
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
                         class="btn btn-primary"
-                        id="submitTransactionButton">
-                        Confirm
+                        id="newTransferButton">
+                        + New Transfer
                     </button>
 
                 </div>
 
-            </form>
 
-        </div>
+                <!-- ==================== TRANSFER FORM ==================== -->
 
-    </div>
+                <div
+                    id="transferFormContainer"
+                    class="card shadow-sm mb-4 d-none">
 
+                    <div class="card-body p-4">
 
-    <!-- ==================== TRANSACTION LIST ==================== -->
-
-    <div class="card shadow-sm">
-
-        <div class="card-body">
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle mb-0">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                ID
-                            </th>
-
-                            <th>
-                                Account
-                            </th>
-
-                            <th>
-                                Type
-                            </th>
-
-                            <th>
-                                Amount
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                        </tr>
-
-                    </thead>
+                        <h4 class="mb-4">
+                            New Transfer
+                        </h4>
 
 
-                    <tbody id="transactionsList">
+                        <form id="transferForm">
 
-                        <!-- Transactions loaded with JavaScript -->
+                            <div class="row">
 
-                    </tbody>
+                                <!-- SOURCE ACCOUNT -->
 
-                </table>
+                                <div class="col-md-6 mb-3">
 
-            </div>
+                                    <label for="sourceAccount" class="form-label">
+                                        Source IBAN
+                                    </label>
 
-        </div>
+                                    <select
+                                        id="sourceAccount"
+                                        class="form-select"
+                                        required>
 
-    </div>
+                                        <option value="">
+                                            Select source account
+                                        </option>
 
-</section>
-
-
-<!-- ==================== TRANSFERS ==================== -->
-
-<section
-    id="transfersSection"
-    class="d-none">
-
-    <!-- HEADER -->
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <div>
-            <h2 class="mb-1">
-                Transfers
-            </h2>
-
-            <p class="text-secondary mb-0">
-                Manage bank transfers.
-            </p>
-        </div>
-
-        <button
-            type="button"
-            class="btn btn-primary"
-            id="newTransferButton">
-            + New Transfer
-        </button>
-
-    </div>
+                                    </select>
 
 
-    <!-- ==================== TRANSFER FORM ==================== -->
+                                    <div class="mt-2">
 
-    <div
-        id="transferFormContainer"
-        class="card shadow-sm mb-4 d-none">
+                                        <small class="text-secondary">
+                                            Current balance:
+                                        </small>
 
-        <div class="card-body p-4">
+                                        <strong
+                                            id="sourceAccountBalance"
+                                            class="ms-1">
+                                            -
+                                        </strong>
 
-            <h4 class="mb-4">
-                New Transfer
-            </h4>
+                                    </div>
 
-
-            <form id="transferForm">
-
-                <div class="row">
-
-                    <!-- SOURCE ACCOUNT -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label for="sourceAccount" class="form-label">
-                            Source IBAN
-                        </label>
-
-                        <select
-                            id="sourceAccount"
-                            class="form-select"
-                            required>
-
-                            <option value="">
-                                Select source account
-                            </option>
-
-                        </select>
+                                </div>
 
 
-                        <div class="mt-2">
+                                <!-- DESTINATION ACCOUNT -->
 
-                            <small class="text-secondary">
-                                Current balance:
-                            </small>
+                                <div class="col-md-6 mb-3">
 
-                            <strong
-                                id="sourceAccountBalance"
-                                class="ms-1">
-                                -
-                            </strong>
+                                    <label for="destinationAccount" class="form-label">
+                                        Destination IBAN
+                                    </label>
 
-                        </div>
+                                    <select
+                                        id="destinationAccount"
+                                        class="form-select"
+                                        required>
+
+                                        <option value="">
+                                            Select destination account
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- AMOUNT -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label
+                                        for="transferAmount"
+                                        class="form-label">
+                                        Amount
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            &euro;
+                                        </span>
+
+                                        <input
+                                            type="number"
+                                            id="transferAmount"
+                                            class="form-control"
+                                            min="0.01"
+                                            step="0.01"
+                                            required>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- MESSAGE -->
+
+                            <p
+                                id="transferMessage"
+                                class="text-danger">
+                            </p>
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="d-flex justify-content-end gap-2">
+
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-secondary"
+                                    id="cancelTransferButton">
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                    Confirm Transfer
+                                </button>
+
+                            </div>
+
+                        </form>
 
                     </div>
 
-
-                    <!-- DESTINATION ACCOUNT -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label for="destinationAccount" class="form-label">
-                            Destination IBAN
-                        </label>
-
-                        <select
-                            id="destinationAccount"
-                            class="form-select"
-                            required>
-
-                            <option value="">
-                                Select destination account
-                            </option>
-
-                        </select>
-
-                    </div>
+                </div>
 
 
-                    <!-- AMOUNT -->
+                <!-- ==================== TRANSFER LIST ==================== -->
 
-                    <div class="col-md-6 mb-3">
+                <div class="card shadow-sm">
 
-                        <label
-                            for="transferAmount"
-                            class="form-label">
-                            Amount
-                        </label>
+                    <div class="card-body">
 
-                        <div class="input-group">
+                        <div class="table-responsive">
 
-                            <span class="input-group-text">
-                                &euro;
-                            </span>
+                            <table class="table table-hover align-middle mb-0">
 
-                            <input
-                                type="number"
-                                id="transferAmount"
-                                class="form-control"
-                                min="0.01"
-                                step="0.01"
-                                required>
+                                <thead>
+
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Source Account</th>
+                                        <th>Destination Account</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="transfersList">
+
+                                    <!-- Transfers loaded with JavaScript -->
+
+                                </tbody>
+
+                            </table>
 
                         </div>
 
@@ -969,223 +818,219 @@
 
                 </div>
 
-
-                <!-- MESSAGE -->
-
-                <p
-                    id="transferMessage"
-                    class="text-danger">
-                </p>
+            </section>
 
 
-                <!-- BUTTONS -->
+            <!-- ==================== PAYMENTS ==================== -->
 
-                <div class="d-flex justify-content-end gap-2">
+            <section id="paymentsSection" class="d-none">
+
+                <!-- HEADER -->
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+                        <h2 class="mb-1">Payments</h2>
+
+                        <p class="text-secondary mb-0">
+                            Manage banking payments.
+                        </p>
+                    </div>
 
                     <button
                         type="button"
-                        class="btn btn-outline-secondary"
-                        id="cancelTransferButton">
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-                        Confirm Transfer
+                        class="btn btn-primary"
+                        id="newPaymentButton">
+                        + New Payment
                     </button>
 
                 </div>
 
-            </form>
 
-        </div>
+                <!-- ==================== PAYMENT FORM ==================== -->
 
-    </div>
+                <div
+                    id="paymentFormContainer"
+                    class="card shadow-sm mb-4 d-none">
 
+                    <div class="card-body p-4">
 
-    <!-- ==================== TRANSFER LIST ==================== -->
+                        <h4 class="mb-4">New Payment</h4>
 
-    <div class="card shadow-sm">
+                        <form id="paymentForm">
 
-        <div class="card-body">
+                            <div class="row">
 
-            <div class="table-responsive">
+                                <!-- ACCOUNT -->
 
-                <table class="table table-hover align-middle mb-0">
+                                <div class="col-md-6 mb-3">
 
-                    <thead>
+                                    <label
+                                        for="paymentAccount"
+                                        class="form-label">
+                                        Account
+                                    </label>
 
-                        <tr>
-                            <th>ID</th>
-                            <th>Source Account</th>
-                            <th>Destination Account</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
+                                    <select
+                                        id="paymentAccount"
+                                        class="form-select"
+                                        required>
 
-                    </thead>
+                                        <option value="">
+                                            Select an account
+                                        </option>
 
+                                    </select>
 
-                    <tbody id="transfersList">
+                                    <div class="mt-2">
+                                        <small class="text-secondary">
+                                            Current balance:
+                                        </small>
 
-                        <!-- Transfers loaded with JavaScript -->
+                                        <strong
+                                            id="paymentAccountBalance"
+                                            class="ms-1">
+                                            -
+                                        </strong>
+                                    </div>
 
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================== PAYMENTS ==================== -->
-
-<section id="paymentsSection" class="d-none">
-
-    <!-- HEADER -->
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <div>
-            <h2 class="mb-1">Payments</h2>
-
-            <p class="text-secondary mb-0">
-                Manage banking payments.
-            </p>
-        </div>
-
-        <button
-            type="button"
-            class="btn btn-primary"
-            id="newPaymentButton">
-            + New Payment
-        </button>
-
-    </div>
+                                </div>
 
 
-    <!-- ==================== PAYMENT FORM ==================== -->
+                                <!-- ENTITY -->
 
-    <div
-        id="paymentFormContainer"
-        class="card shadow-sm mb-4 d-none">
+                                <div class="col-md-6 mb-3">
 
-        <div class="card-body p-4">
+                                    <label
+                                        for="paymentEntity"
+                                        class="form-label">
+                                        Entity
+                                    </label>
 
-            <h4 class="mb-4">New Payment</h4>
+                                    <input
+                                        type="text"
+                                        id="paymentEntity"
+                                        class="form-control"
+                                        maxlength="5"
+                                        placeholder="e.g. 12345"
+                                        required>
 
-            <form id="paymentForm">
-
-                <div class="row">
-
-                    <!-- ACCOUNT -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label
-                            for="paymentAccount"
-                            class="form-label">
-                            Account
-                        </label>
-
-                        <select
-                            id="paymentAccount"
-                            class="form-select"
-                            required>
-
-                            <option value="">
-                                Select an account
-                            </option>
-
-                        </select>
-
-                        <div class="mt-2">
-                            <small class="text-secondary">
-                                Current balance:
-                            </small>
-
-                            <strong
-                                id="paymentAccountBalance"
-                                class="ms-1">
-                                -
-                            </strong>
-                        </div>
-
-                    </div>
+                                </div>
 
 
-                    <!-- ENTITY -->
+                                <!-- REFERENCE -->
 
-                    <div class="col-md-6 mb-3">
+                                <div class="col-md-6 mb-3">
 
-                        <label
-                            for="paymentEntity"
-                            class="form-label">
-                            Entity
-                        </label>
+                                    <label
+                                        for="paymentReference"
+                                        class="form-label">
+                                        Reference
+                                    </label>
 
-                        <input
-                            type="text"
-                            id="paymentEntity"
-                            class="form-control"
-                            maxlength="5"
-                            placeholder="e.g. 12345"
-                            required>
+                                    <input
+                                        type="text"
+                                        id="paymentReference"
+                                        class="form-control"
+                                        maxlength="9"
+                                        placeholder="e.g. 123456789"
+                                        required>
 
-                    </div>
+                                </div>
 
 
-                    <!-- REFERENCE -->
+                                <!-- AMOUNT -->
 
-                    <div class="col-md-6 mb-3">
+                                <div class="col-md-6 mb-3">
 
-                        <label
-                            for="paymentReference"
-                            class="form-label">
-                            Reference
-                        </label>
+                                    <label
+                                        for="paymentAmount"
+                                        class="form-label">
+                                        Amount
+                                    </label>
 
-                        <input
-                            type="text"
-                            id="paymentReference"
-                            class="form-control"
-                            maxlength="9"
-                            placeholder="e.g. 123456789"
-                            required>
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            &euro;
+                                        </span>
+
+                                        <input
+                                            type="number"
+                                            id="paymentAmount"
+                                            class="form-control"
+                                            min="0.01"
+                                            step="0.01"
+                                            required>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- MESSAGE -->
+
+                            <p
+                                id="paymentMessage"
+                                class="text-danger">
+                            </p>
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="d-flex justify-content-end gap-2">
+
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-secondary"
+                                    id="cancelPaymentButton">
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                    Confirm Payment
+                                </button>
+
+                            </div>
+
+                        </form>
 
                     </div>
 
+                </div>
 
-                    <!-- AMOUNT -->
 
-                    <div class="col-md-6 mb-3">
+                <!-- ==================== PAYMENTS LIST ==================== -->
 
-                        <label
-                            for="paymentAmount"
-                            class="form-label">
-                            Amount
-                        </label>
+                <div class="card shadow-sm">
 
-                        <div class="input-group">
+                    <div class="card-body">
 
-                            <span class="input-group-text">
-                                &euro;
-                            </span>
+                        <div class="table-responsive">
 
-                            <input
-                                type="number"
-                                id="paymentAmount"
-                                class="form-control"
-                                min="0.01"
-                                step="0.01"
-                                required>
+                            <table class="table table-hover align-middle mb-0">
+
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Account</th>
+                                        <th>Entity</th>
+                                        <th>Reference</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="paymentsList">
+                                    <!-- Payments loaded with JavaScript -->
+                                </tbody>
+
+                            </table>
 
                         </div>
 
@@ -1193,299 +1038,190 @@
 
                 </div>
 
-
-                <!-- MESSAGE -->
-
-                <p
-                    id="paymentMessage"
-                    class="text-danger">
-                </p>
+            </section>
 
 
-                <!-- BUTTONS -->
 
-                <div class="d-flex justify-content-end gap-2">
+            <!-- ==================== EMPLOYEES ==================== -->
+
+            <section id="employeesSection" class="d-none">
+
+                <!-- HEADER -->
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+                        <h2 class="mb-1">Employees</h2>
+                        <p class="text-secondary mb-0">
+                            Manage bank employees.
+                        </p>
+                    </div>
 
                     <button
                         type="button"
-                        class="btn btn-outline-secondary"
-                        id="cancelPaymentButton">
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-                        Confirm Payment
+                        class="btn btn-primary"
+                        id="newEmployeeButton">
+                        + Add Employee
                     </button>
 
                 </div>
 
-            </form>
 
-        </div>
+                <!-- ==================== EMPLOYEE FORM ==================== -->
 
-    </div>
+                <div id="employeeFormContainer" class="card shadow-sm mb-4 d-none">
+                    <div class="card-body p-4">
+                        <h4 class="mb-4">New Employee</h4>
 
+                        <form id="employeeForm">
+                            <div class="row">
 
-    <!-- ==================== PAYMENTS LIST ==================== -->
+                                <!-- NAME -->
+                                <div class="col-md-6 mb-3">
 
-    <div class="card shadow-sm">
+                                    <label for="employeeName" class="form-label">
+                                        Full Name
+                                    </label>
 
-        <div class="card-body">
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle mb-0">
-
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Account</th>
-                            <th>Entity</th>
-                            <th>Reference</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="paymentsList">
-                        <!-- Payments loaded with JavaScript -->
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
+                                    <input type="text" id="employeeName" class="form-control" required>
+                                </div>
 
 
+                                <!-- EMAIL -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="employeeEmail" class="form-label">
+                                        Email
+                                    </label>
 
-<!-- ==================== EMPLOYEES ==================== -->
-
-<section id="employeesSection" class="d-none">
-
-    <!-- HEADER -->
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <div>
-            <h2 class="mb-1">Employees</h2>
-            <p class="text-secondary mb-0">
-                Manage bank employees.
-            </p>
-        </div>
-
-        <button
-            type="button"
-            class="btn btn-primary"
-            id="newEmployeeButton">
-            + Add Employee
-        </button>
-
-    </div>
+                                    <input type="email" id="employeeEmail" class="form-control" required>
+                                </div>
 
 
-    <!-- ==================== EMPLOYEE FORM ==================== -->
+                                <!-- PHONE -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="employeePhone" class="form-label">
+                                        Phone Number
+                                    </label>
 
-    <div
-        id="employeeFormContainer"
-        class="card shadow-sm mb-4 d-none">
+                                    <input type="tel" id="employeePhone" class="form-control">
+                                </div>
 
-        <div class="card-body p-4">
 
-            <h4 class="mb-4">New Employee</h4>
+                                <!-- STATUS -->
+                                <div class="col-md-6 mb-3">
 
-            <form id="employeeForm">
+                                    <label for="employeeStatus" class="form-label">
+                                        Status
+                                    </label>
 
-                <div class="row">
+                                    <select
+                                        id="employeeStatus"
+                                        class="form-select"
+                                        required>
 
-                    <!-- NAME -->
+                                        <option value="ACTIVE">ACTIVE</option>
+                                        <option value="INACTIVE">INACTIVE</option>
 
-                    <div class="col-md-6 mb-3">
+                                    </select>
 
-                        <label for="employeeName" class="form-label">
-                            Full Name
-                        </label>
+                                </div>
 
-                        <input
-                            type="text"
-                            id="employeeName"
-                            class="form-control"
-                            required>
+                                
+                                <!-- USERNAME -->
 
+                                <div class="col-md-6 mb-3">
+
+                                    <label for="employeeUsername" class="form-label">
+                                        Username
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="employeeUsername"
+                                        class="form-control"
+                                        autocomplete="off"
+                                        required>
+
+                                </div>
+
+
+                                <!-- PASSWORD -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label for="employeePassword" class="form-label">
+                                        Password
+                                    </label>
+
+                                    <input
+                                        type="password"
+                                        id="employeePassword"
+                                        class="form-control"
+                                        autocomplete="new-password"
+                                        required>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- MESSAGE -->
+
+                            <p
+                                id="employeeMessage"
+                                class="text-danger">
+                            </p>
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="d-flex justify-content-end gap-2">
+
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-secondary"
+                                    id="cancelEmployeeButton">
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                    Create Employee
+                                </button>
+
+                            </div>
+
+                        </form>
                     </div>
-
-
-                    <!-- EMAIL -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label for="employeeEmail" class="form-label">
-                            Email
-                        </label>
-
-                        <input
-                            type="email"
-                            id="employeeEmail"
-                            class="form-control"
-                            required>
-
-                    </div>
-
-
-                    <!-- PHONE -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label for="employeePhone" class="form-label">
-                            Phone Number
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="employeePhone"
-                            class="form-control">
-
-                    </div>
-
-
-                    <!-- STATUS -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label for="employeeStatus" class="form-label">
-                            Status
-                        </label>
-
-                        <select
-                            id="employeeStatus"
-                            class="form-select"
-                            required>
-
-                            <option value="ACTIVE">ACTIVE</option>
-                            <option value="INACTIVE">INACTIVE</option>
-
-                        </select>
-
-                    </div>
-
-                    
-                    <!-- USERNAME -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label for="employeeUsername" class="form-label">
-                            Username
-                        </label>
-
-                        <input
-                            type="text"
-                            id="employeeUsername"
-                            class="form-control"
-                            autocomplete="off"
-                            required>
-
-                    </div>
-
-
-                    <!-- PASSWORD -->
-
-                    <div class="col-md-6 mb-3">
-
-                        <label for="employeePassword" class="form-label">
-                            Password
-                        </label>
-
-                        <input
-                            type="password"
-                            id="employeePassword"
-                            class="form-control"
-                            autocomplete="new-password"
-                            required>
-
-                    </div>
-
-
                 </div>
 
 
-                <!-- MESSAGE -->
+                <!-- ==================== EMPLOYEES LIST ==================== -->
 
-                <p
-                    id="employeeMessage"
-                    class="text-danger">
-                </p>
-
-
-                <!-- BUTTONS -->
-
-                <div class="d-flex justify-content-end gap-2">
-
-                    <button
-                        type="button"
-                        class="btn btn-outline-secondary"
-                        id="cancelEmployeeButton">
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-                        Create Employee
-                    </button>
-
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="employeesList">
+                                    <!-- Employees loaded with JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-
-    <!-- ==================== EMPLOYEES LIST ==================== -->
-
-    <div class="card shadow-sm">
-
-        <div class="card-body">
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle mb-0">
-
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="employeesList">
-                        <!-- Employees loaded with JavaScript -->
-                    </tbody>
-
-                </table>
-
-            </div>
+            </section>
 
         </div>
-
-    </div>
-
-</section>
-
-
-        </div>
-
     </main>
-
 </div>

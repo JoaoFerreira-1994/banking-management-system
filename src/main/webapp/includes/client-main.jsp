@@ -4,97 +4,58 @@
     <!-- ==================== SIDEBAR ==================== -->
 
     <aside class="sidebar">
-
         <div class="sidebar-logo">
-            <img
-                src="${pageContext.request.contextPath}/images/core-bank-logo.png"
-                alt="Core Bank"
-                class="img-fluid">
+            <img src="${pageContext.request.contextPath}/images/core-bank-logo.png" alt="Core Bank" class="img-fluid">
         </div>
 
         <nav class="sidebar-menu">
+            <button id="homeButton" class="menu-button active">Home</button>
 
-            <button id="homeButton" class="menu-button active">
-                Home
-            </button>
+            <button id="accountsButton" class="menu-button">My Accounts</button>
 
-            <button id="accountsButton" class="menu-button">
-                My Accounts
-            </button>
+            <button id="transactionsButton" class="menu-button">Transactions</button>
 
-            <button id="transactionsButton" class="menu-button">
-                Transactions
-            </button>
+            <button id="transferButton" class="menu-button">Transfers</button>
 
-            <button id="transferButton" class="menu-button">
-                Transfers
-            </button>
+            <button id="paymentsButton" class="menu-button">Payments</button>
 
-            <button id="paymentsButton" class="menu-button">
-                Payments
-            </button>
-
-            <button id="profileButton" class="menu-button">
-                My Profile
-            </button>
-
+            <button id="profileButton" class="menu-button">My Profile</button>
         </nav>
-
     </aside>
 
-
     <!-- ==================== MAIN AREA ==================== -->
-
     <div class="main-area">
-
         <!-- TOP BAR -->
-
         <header class="top-bar">
-
             <h5 class="mb-0">Client Area</h5>
-
             <div class="user-area">
-
                 <span id="username"></span>
-
                 <button
                     type="button"
                     id="logoutButton"
                     class="btn btn-outline-danger btn-sm">
                     Logout
                 </button>
-
             </div>
-
         </header>
 
-
         <!-- ==================== CONTENT ==================== -->
-
         <main class="content">
 
             <!-- HOME -->
-
             <section id="homeSection">
-
                 <h2>Welcome to Core Bank</h2>
-
                 <p class="text-secondary">
                     Welcome, <strong id="homeUsername"></strong>.
                 </p>
 
                 <div class="row g-4 mt-2">
-
                     <div class="col-md-4">
                         <div class="card shadow-sm">
                             <div class="card-body">
-
-                                <h6 class="text-secondary">
-                                    My Accounts
-                                </h6>
+                                <h6 class="text-secondary">My Accounts</h6>
 
                                 <h3 id="totalAccounts">-</h3>
-
                             </div>
                         </div>
                     </div>
@@ -102,25 +63,16 @@
                     <div class="col-md-4">
                         <div class="card shadow-sm">
                             <div class="card-body">
-
-                                <h6 class="text-secondary">
-                                    Total Balance
-                                </h6>
+                                <h6 class="text-secondary">Total Balance</h6>
 
                                 <h3 id="totalBalance">-</h3>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </section>
 
-
-          
             <!-- ==================== ACCOUNTS ==================== -->
-
             <section id="accountsSection" class="d-none">
 
                 <div class="mb-4">
@@ -132,56 +84,43 @@
 
                 <!-- ACCOUNT LIST -->
                 <div id="accountsList" class="row g-4"></div>
-
                 
                 <!-- ACCOUNT CARD TEMPLATE -->
 
                 <template id="accountCardTemplate">
-
                     <div class="col-md-6 col-xl-4">
-
                         <div class="card h-100 shadow-sm border-start border-primary border-4">
-
                             <div class="card-body">
 
                                 <!-- HEADER -->
 
                                 <div class="d-flex justify-content-between align-items-start">
-
                                     <h5 class="account-type mt-1 mb-2"></h5>
-
                                     <span class="account-status badge"></span>
-
                                 </div>
 
                                 <hr>
 
                                 <!-- IBAN -->
-
                                 <div class="mb-4">
 
                                     <small class="text-secondary d-block">
                                         IBAN
                                     </small>
-
                                     <strong class="account-iban text-primary"></strong>
 
                                 </div>
 
                                 <!-- ACCOUNT DETAILS -->
-
                                 <div class="row">
 
                                     <div class="col-6">
-
                                         <small class="text-secondary d-block">
                                             Balance
                                         </small>
 
                                         <strong class="account-balance"></strong>
-
                                     </div>
-
                                     <div class="col-6 border-start">
 
                                         <small class="text-secondary d-block">
@@ -189,42 +128,26 @@
                                         </small>
 
                                         <strong class="account-id"></strong>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </template>
-
-
             </section>
 
-
-
             <!-- TRANSACTIONS -->
-
             <section id="transactionsSection" class="d-none">
 
                 <h2>Transactions</h2>
-
                 <p class="text-secondary">
                     View your transaction history.
                 </p>
 
                 <div class="card shadow-sm">
-
                     <div class="card-body">
-
                         <div class="table-responsive">
-
                             <table class="table table-hover align-middle mb-0">
-
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -238,23 +161,14 @@
                                 <tbody id="transactionsList">
                                     <!-- Loaded with JavaScript -->
                                 </tbody>
-
                             </table>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </section>
 
-
             <!-- TRANSFERS -->
-
-                        
             <section id="transfersSection" class="d-none">
-
                 <h2>Transfers</h2>
                 <p class="text-secondary">
                     Transfer money between bank accounts.
@@ -262,17 +176,13 @@
 
                 <div class="card shadow-sm">
                     <div class="card-body">
-
                         <form id="transferForm">
-
                             <div class="mb-3">
                                 <label for="transferSource" class="form-label">
                                     Source Account
                                 </label>
 
-                                <select id="transferSource"
-                                        class="form-select"
-                                        required>
+                                <select id="transferSource" class="form-select" required>
                                     <option value="">Select account</option>
                                 </select>
                             </div>
@@ -282,12 +192,7 @@
                                     Destination IBAN
                                 </label>
 
-                                <input type="text"
-                                    id="transferDestination"
-                                    class="form-control"
-                                    placeholder="Enter destination IBAN"
-                                    maxlength="34"
-                                    required>
+                                <input type="text" id="transferDestination" class="form-control" placeholder="Enter destination IBAN" maxlength="34" required>
                             </div>
 
                             <div class="mb-3">
@@ -295,12 +200,7 @@
                                     Amount (&euro;)
                                 </label>
 
-                                <input type="number"
-                                    id="transferAmount"
-                                    class="form-control"
-                                    min="0.01"
-                                    step="0.01"
-                                    required>
+                                <input type="number" id="transferAmount" class="form-control" min="0.01" step="0.01" required>
 
                                     <div class="mt-2">
                                         <small class="text-secondary">
@@ -316,16 +216,15 @@
                             <button type="submit" class="btn btn-primary">
                                 Transfer
                             </button>
-
                         </form>
 
                         <div id="transferMessage" class="mt-3"></div>
-
                     </div>
                 </div>
 
             </section>
 
+            <!-- PAYMENTS -->
             <section id="paymentsSection" class="d-none">
 
                 <h2>Payments</h2>
@@ -335,17 +234,13 @@
 
                 <div class="card shadow-sm">
                     <div class="card-body">
-
                         <form id="paymentForm">
-
                             <div class="mb-3">
                                 <label for="paymentAccount" class="form-label">
                                     Source Account
                                 </label>
 
-                                <select id="paymentAccount"
-                                        class="form-select"
-                                        required>
+                                <select id="paymentAccount" class="form-select" required>
                                     <option value="">Select account</option>
                                 </select>
                             </div>
@@ -355,10 +250,7 @@
                                     Entity
                                 </label>
 
-                                <input type="text"
-                                    id="paymentEntity"
-                                    class="form-control"
-                                    required>
+                                <input type="text" id="paymentEntity" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
@@ -366,10 +258,7 @@
                                     Reference
                                 </label>
 
-                                <input type="text"
-                                    id="paymentReference"
-                                    class="form-control"
-                                    required>
+                                <input type="text" id="paymentReference" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
@@ -377,13 +266,7 @@
                                     Amount (&euro;)
                                 </label>
 
-                                <input type="number"
-                                    id="paymentAmount"
-                                    class="form-control"
-                                    min="0.01"
-                                    step="0.01"
-                                    required>
-
+                                <input type="number" id="paymentAmount" class="form-control" min="0.01" step="0.01" required>
                                 <div class="mt-2">
                                     <small class="text-secondary">
                                         Available balance:
@@ -394,11 +277,9 @@
                                     </strong>
                                 </div>
                             </div>
-
                             <button type="submit" class="btn btn-primary">
                                 Pay
                             </button>
-
                         </form>
 
                         <div id="paymentMessage" class="mt-3"></div>
@@ -409,7 +290,6 @@
             </section>
 
             <!-- PROFILE -->
-
             <section id="profileSection" class="d-none">
 
                 <h2>My Profile</h2>
@@ -421,9 +301,7 @@
                 
                 <div class="card shadow-sm">
                     <div class="card-body">
-
                         <h5 class="card-title mb-4">Personal Information</h5>
-
                         <div id="profileContent" class="row g-3">
 
                             <div class="col-md-6">
@@ -454,12 +332,7 @@
                         </div>
                     </div>
                 </div>
-
-
             </section>
-
         </main>
-
     </div>
-
 </div>
